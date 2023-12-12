@@ -1,4 +1,6 @@
-﻿namespace Fruit_Ninja
+﻿using System.Windows.Forms;
+
+namespace Fruit_Ninja
 {
     partial class Main
     {
@@ -185,8 +187,11 @@
             this.panelGame.Size = new System.Drawing.Size(784, 561);
             this.panelGame.TabIndex = 12;
             this.panelGame.Visible = false;
-            this.panelGame.Click += new System.EventHandler(this.PanelGame_Click);
+            //this.panelGame.Click += new System.EventHandler(this.PanelGame_Click);
             this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelGame_Paint);
+            this.panelGame.MouseMove += new MouseEventHandler(this.PanelGame_MouseMove);
+            this.panelGame.MouseUp += new MouseEventHandler(this.PanelGame_MouseUp);
+            this.panelGame.MouseDown += new MouseEventHandler(this.PanelGame_Click);
             // 
             // lblTime
             // 

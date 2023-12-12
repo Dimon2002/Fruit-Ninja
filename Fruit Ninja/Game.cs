@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Fruit_Ninja
 {
     public class Game
     {
+        public Main MainForm { get; }
+
         public static Random r = new Random();
 
         public Image background;
@@ -15,7 +18,7 @@ namespace Fruit_Ninja
         public List<Element> elements = new List<Element>();
 
         public Score currentScore = new Score(0, new DateTime(), "");
-        public int time = 5;
+        public int time = 25;
         public int bombsClicked = 0;
 
         private static readonly Image[] BackgroundResources =
@@ -25,9 +28,10 @@ namespace Fruit_Ninja
             Properties.Resources.background3
         };
 
-        public Game()
+        public Game(Main mainForm)
         {
             InitializeBackground();
+            MainForm = mainForm;
         }
 
         private void InitializeBackground()
@@ -54,8 +58,8 @@ namespace Fruit_Ninja
             for (var i = elements.Count - 1; i >= 0; i--)
             {
                 if (elements[i].type.Equals("-10Bomb")
-                   || elements[i].type.Equals("GameOverBomb")
-                   || elements[i].ulCorner.Y < SettingsForm.settings.Height)
+                    || elements[i].type.Equals("GameOverBomb")
+                    || elements[i].ulCorner.Y < SettingsForm.settings.Height)
                 {
                     continue;
                 }
@@ -65,6 +69,46 @@ namespace Fruit_Ninja
             }
         }
 
+        public void DrawCurve(List<Point> points)
+        {
+            using (var g = MainForm.panelGame.CreateGraphics())
+            {
+                if (points.Count >= 2)
+                {
+                    g.DrawCurve(Pens.Black, points.ToArray());
+                }
+            }
+        }
+
+        public bool CheckSlice(List<Point> points)
+        {
+            var elementHandlers = new Dictionary<string, Action>
+            {
+                { "-10Bomb", () => ProcessBombClick(-10) },
+                { "Banana", () => ProcessFruitClick(2) },
+                { "Apple", () => ProcessFruitClick(3) },
+                { "Pineapple", () => ProcessFruitClick(4) },
+                { "Watermelon", () => ProcessFruitClick(5) }
+            };
+
+            foreach (var el in elements.Where(el => el.IntersectsCurve(points)))
+            {
+                if (elementHandlers.TryGetValue(el.type, out var handler))
+                {
+                    handler.Invoke();
+                    elements.Remove(el);
+                    break;
+                }
+
+                if (el.type == "GameOverBomb")
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        
         public bool CheckClick(Point point)
         {
             var elementHandlers = new Dictionary<string, Action>

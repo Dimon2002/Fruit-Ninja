@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Fruit_Ninja
@@ -9,14 +11,14 @@ namespace Fruit_Ninja
         public static Random r = new Random();
 
         public Image image;
-        
+
         public Point ulCorner;
         public Point urCorner;
         public Point llCorner;
 
         public int directionX;
         public int directionY;
-        
+
         public bool enabled = true;
         public string type;
 
@@ -31,8 +33,8 @@ namespace Fruit_Ninja
 
             Point[] destPara =
             {
-                ulCorner, 
-                urCorner, 
+                ulCorner,
+                urCorner,
                 llCorner
             };
             e.Graphics.DrawImage(newImage, destPara);
@@ -60,9 +62,32 @@ namespace Fruit_Ninja
             llCorner = new Point(llCorner.X + directionX, llCorner.Y + directionY);
         }
 
+        public bool IntersectsCurve(List<Point> points)
+        {
+            foreach (var point in points)
+            {
+                if (IsPointInsideElement(point))
+                    return false;
+            }
+
+            return true;
+
+            return points.Any(IsPointInsideElement);
+        }
+
+        private bool IsPointInsideElement(Point point)
+        {
+
+            return true;
+            return IsClicked(point);
+        }
+        
         public bool IsClicked(Point p)
         {
-            return p.X >= ulCorner.X && p.X <= urCorner.X && p.Y >= ulCorner.Y && p.Y <= llCorner.Y;
+            return p.X >= ulCorner.X 
+                   && p.X <= urCorner.X
+                   && p.Y >= ulCorner.Y
+                   && p.Y <= llCorner.Y;
         }
 
         public void Generate()
@@ -134,7 +159,7 @@ namespace Fruit_Ninja
             ulCorner = new Point(currentPosition * image.Width + 10, SettingsForm.settings.Height - image.Height / 2);
             urCorner = new Point((currentPosition + 1) * image.Width, SettingsForm.settings.Height - image.Height / 2);
             llCorner = new Point(currentPosition * image.Width + 10, SettingsForm.settings.Height + image.Height / 2);
-            
+
             directionX = 0;
             directionY = -10;
 

@@ -47,9 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomToolTip.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Element.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="HighScoresForm.cs">

@@ -26,6 +26,12 @@ namespace Fruit_Ninja
         public int ticks = 0;
         public string saveFile = Environment.CurrentDirectory + "\\save.txt";
 
+        private Point _startSlicePoint;
+        private Point _endSlicePoint;
+        private bool _isSlicing;
+         
+        private List<Point> _slicePoints = new List<Point>();
+
         public Main()
         {
             InitializeComponent();
@@ -131,8 +137,36 @@ namespace Fruit_Ninja
         // TODO: Slice figure
         private void PanelGame_Click(object sender, EventArgs e)
         {
-            if (game.CheckClick(PointToClient(Cursor.Position)))
+            _startSlicePoint = PointToClient(Cursor.Position);
+            _isSlicing = true;
+
+            _slicePoints.Clear();
+
+            /*if (game.CheckClick(PointToClient(Cursor.Position)))
+                StopGame();*/
+        }
+
+        private void PanelGame_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!_isSlicing) return;
+
+            _endSlicePoint = PointToClient(Cursor.Position);
+            _slicePoints.Add(_endSlicePoint);
+            game.DrawCurve(_slicePoints);
+            _startSlicePoint = _endSlicePoint;
+        }
+
+        private void PanelGame_MouseUp(object sender, MouseEventArgs e)
+        {
+            _isSlicing = false;
+
+            _slicePoints.Clear();
+            panelGame.Invalidate(true);
+
+            if (game.CheckSlice(_slicePoints))
+            {
                 StopGame();
+            }
         }
 
         private void UnPause_Click(object sender, EventArgs e)
@@ -201,7 +235,7 @@ namespace Fruit_Ninja
 
             lblScore.Text = @"0";
 
-            game = new Game();
+            game = new Game(this);
 
             if (ActiveForm != null)
                 ActiveForm.BackgroundImage = game.background;
