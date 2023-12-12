@@ -11,8 +11,6 @@ namespace Fruit_Ninja
 {
     public partial class Main : Form
     {
-        private CustomToolTip _tip;
-
         public static Dictionary<string, User> users = new Dictionary<string, User>()
         {
             { "Guest", new User() {Name = "Guest"} }
@@ -35,8 +33,6 @@ namespace Fruit_Ninja
             SettingsForm.settings = new Settings(800, 600, "EASY");
 
             // LoadFromFile();
-
-            //DoubleBuffered = true;
 
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
             | BindingFlags.Instance | BindingFlags.NonPublic, null,
@@ -65,17 +61,15 @@ namespace Fruit_Ninja
         private void Highscores_Click(object sender, EventArgs e)
         {
             new HighScoresForm().Show();
-            // x.ShowDialog();
         }
-         
+
         private void User_Click(object sender, EventArgs e)
         {
-            new UserForm().Show();
-            // user.ShowDialog();
-
-            lblUser.Text = currentUser.ToString();
+            var userForm = new UserForm();
+            userForm.ChildFormClosed += UserForm_ChildFormClosed;
+            userForm.Show();
         }
-        
+
         private void Play_Click(object sender, EventArgs e)
         {
             NewGame();
@@ -84,9 +78,9 @@ namespace Fruit_Ninja
         private void Quit_Click(object sender, EventArgs e)
         {
             var dr = MessageBox.Show(
-                @"Are you sure you want to quit? Your progress won't be saved.", 
-                @"Are you a loser?", 
-                MessageBoxButtons.YesNo, 
+                @"Are you sure you want to quit? Your progress won't be saved.",
+                @"Are you a loser?",
+                MessageBoxButtons.YesNo,
                 MessageBoxIcon.Stop);
 
             if (dr == DialogResult.No) return;
@@ -111,94 +105,61 @@ namespace Fruit_Ninja
                 ActiveForm.Width += 224;
                 ActiveForm.Height += 168;
                 resize = false;
-                ReallyCenterToScreen();
+                CenterFormToScreen();
             }
             else
             {
                 ActiveForm.Width -= 224;
                 ActiveForm.Height -= 168;
                 resize = true;
-                ReallyCenterToScreen();
+                CenterFormToScreen();
             }
         }
 
-        private void pbExit_Click(object sender, EventArgs e)
+        private void Exit_Click(object sender, EventArgs e)
         {
-            var dr = MessageBox.Show(@"Are you sure you want to exit the game?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            var dr = MessageBox.Show(
+                @"Are you sure you want to exit the game?",
+                "",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Exclamation);
 
             if (dr == DialogResult.Yes)
                 ActiveForm?.Close();
         }
 
-        private void panelGame_Click(object sender, EventArgs e)
+        // TODO: Slice figure
+        private void PanelGame_Click(object sender, EventArgs e)
         {
             if (game.CheckClick(PointToClient(Cursor.Position)))
                 StopGame();
         }
 
-        private void pbPlay_MouseHover(object sender, EventArgs e)
+        private void UnPause_Click(object sender, EventArgs e)
         {
-            _tip = new CustomToolTip(new Size(121, 48));
-            _tip.SetToolTip(pbPlay, "PLAY");
-        }
-
-        private void pbSettings_MouseHover(object sender, EventArgs e)
-        {
-            _tip = new CustomToolTip(new Size(220, 48));
-            _tip.SetToolTip(pbSettings, "SETTINGS");
-        }
-
-        private void pbHighscores_MouseHover(object sender, EventArgs e)
-        {
-            _tip = new CustomToolTip(new Size(312, 48));
-            _tip.SetToolTip(pbHighscores, "HALL OF FAME");
-        }
-
-        private void pbUser_MouseHover(object sender, EventArgs e)
-        {
-            _tip = new CustomToolTip(new Size(121, 48));
-            _tip.SetToolTip(pbUser, "USER");
-        }
-
-        private void pbExit_MouseHover(object sender, EventArgs e)
-        {
-            _tip = new CustomToolTip(new Size(121, 48));
-            _tip.SetToolTip(pbExit, "EXIT");
-        }
-
-        private void lblUser_TextChanged(object sender, EventArgs e)
-        {
-            if (lblUser.Text.Length > 9)
-                lblUser.Font = new Font(lblUser.Font.FontFamily, 8);
-            else if (lblUser.Text.Length > 6)
-                lblUser.Font = new Font(lblUser.Font.FontFamily, 10);
-            else
-                lblUser.Font = new Font(lblUser.Font.FontFamily, 12);
-        }
-
-        private void pbUnpause_Click(object sender, EventArgs e)
-        {
-            canClick = true;
-            pbUnpause.Visible = false;
-            pbPause.Visible = true;
             pbQuit.Visible = false;
+            pbUnpause.Visible = false;
+
+            pbPause.Visible = true;
+            canClick = true;
 
             gameTimer.Start();
             timeTimer.Start();
         }
 
-        private void pbPause_Click(object sender, EventArgs e)
+        private void Pause_Click(object sender, EventArgs e)
         {
-            canClick = false;
             pbUnpause.Visible = true;
-            pbPause.Visible = false;
             pbQuit.Visible = true;
+
+            canClick = false;
+            pbPause.Visible = false;
 
             gameTimer.Stop();
             timeTimer.Stop();
         }
 
-        private void gameTimer_Tick(object sender, EventArgs e)
+        private void GameTimer_Tick(object sender, EventArgs e)
         {
             lblScore.Text = game.currentScore.points.ToString();
 
@@ -209,31 +170,20 @@ namespace Fruit_Ninja
 
             switch (SettingsForm.settings.Difficulty)
             {
-                case "EASY":
-                    {
-                        speed = 40;
-                        break;
-                    }
-                case "MEDIUM":
-                    {
-                        speed = 30;
-                        break;
-                    }
-                case "HARD":
-                    {
-                        speed = 20;
-                        break;
-                    }
+                case "EASY": speed = 40; break;
+                case "MEDIUM": speed = 30; break;
+                case "HARD": speed = 20; break;
             }
 
             if (ticks++ % speed == 0)
                 game.elements.Add(new Element());
 
-            game.MoveElements();
+            game.Move();
+
             Invalidate(true);
         }
 
-        private void timeTimer_Tick(object sender, EventArgs e)
+        private void ViewTimer_Tick(object sender, EventArgs e)
         {
             lblTime.Text = $@"00:{--game.time:00}";
 
@@ -244,68 +194,45 @@ namespace Fruit_Ninja
         public void NewGame()
         {
             pbUnpause.Visible = true;
+            panelGame.Visible = true;
+
             pbPause.Visible = false;
             tableLayoutPanel1.Visible = false;
-            panelGame.Visible = true;
 
             lblScore.Text = @"0";
 
             game = new Game();
 
-            if (ActiveForm != null) ActiveForm.BackgroundImage = game.background;
+            if (ActiveForm != null)
+                ActiveForm.BackgroundImage = game.background;
 
-            NewMethod();
+            SetGameTimeInterval();
 
             Invalidate(true);
         }
 
-        private void NewMethod()
+        private void SetGameTimeInterval()
         {
             switch (SettingsForm.settings.Difficulty)
             {
-                case "EASY":
-                    {
-                        gameTimer.Interval = 50;
-                        break;
-                    }
-                case "MEDIUM":
-                    {
-                        gameTimer.Interval = 30;
-                        break;
-                    }
-                case "HARD":
-                    {
-                        gameTimer.Interval = 20;
-                        break;
-                    }
+                case "EASY": gameTimer.Interval = 50; break;
+                case "MEDIUM": gameTimer.Interval = 30; break;
+                case "HARD": gameTimer.Interval = 20; break;
             }
         }
 
         public void StopGame()
         {
-            var currentScore = new Score(int.Parse(lblScore.Text), DateTime.Now, lblUser.Text);
-
-            topScores.Add(currentScore);
-            currentUser.AddScore(currentScore);
+            var currentScore = new Score(int.Parse(lblScore.Text), DateTime.Now, currentUser.Name);
 
             gameTimer.Stop();
             timeTimer.Stop();
 
-            string text;
-            string title;
+            topScores.Add(currentScore);
+            currentUser.AddScore(currentScore);
 
-            if (game.time != 0)
-            {
-                text =
-                    $"Thank you for playing {currentUser.Name}. You have scored {game.currentScore.points} points! Play again?";
-                title = "Game Over :(";
-            }
-            else
-            {
-                text =
-                    $"No more time {currentUser.Name}. You have scored {game.currentScore.points} points! Play again?";
-                title = "Time Up :(";
-            }
+            const string title = "Time Up :(";
+            var text = $"No more time {currentUser.Name}. You have scored {game.currentScore.points} points! Play again?";
 
             var dr = MessageBox.Show(text, title, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
@@ -317,11 +244,13 @@ namespace Fruit_Ninja
             {
                 tableLayoutPanel1.Visible = true;
                 panelGame.Visible = false;
-                if (ActiveForm != null) ActiveForm.BackgroundImage = Properties.Resources._2013_08_28_105146;
+
+                if (ActiveForm != null) 
+                    ActiveForm.BackgroundImage = Properties.Resources._2013_08_28_105146;
             }
         }
 
-        protected void ReallyCenterToScreen()
+        protected void CenterFormToScreen()
         {
             var screen = Screen.FromControl(this);
 
@@ -334,6 +263,19 @@ namespace Fruit_Ninja
             };
         }
 
+        private void UserForm_ChildFormClosed(object sender, EventArgs e)
+        {
+            lblUser.Text = currentUser.ToString();
+
+            Invalidate(true);
+
+            if (sender is UserForm userForm)
+            {
+                userForm.ChildFormClosed -= UserForm_ChildFormClosed;
+            }
+        }
+
+        // TODO: Save scores to file
         public void SaveToFile()
         {
             var bf = new BinaryFormatter();
@@ -344,6 +286,7 @@ namespace Fruit_Ninja
 
         } // try catch
 
+        // TODO: Load scores from file
         public void LoadFromFile()
         {
             var bf = new BinaryFormatter();

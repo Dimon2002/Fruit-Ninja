@@ -54,6 +54,7 @@ namespace Fruit_Ninja
                     directionX = -directionX;
                 }
             }
+
             ulCorner = new Point(ulCorner.X + directionX, ulCorner.Y + directionY);
             urCorner = new Point(urCorner.X + directionX, urCorner.Y + directionY);
             llCorner = new Point(llCorner.X + directionX, llCorner.Y + directionY);

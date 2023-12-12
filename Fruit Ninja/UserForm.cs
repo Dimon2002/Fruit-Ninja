@@ -7,6 +7,8 @@ namespace Fruit_Ninja
 {
     public partial class UserForm : Form
     {
+        public event EventHandler ChildFormClosed;
+        
         public Timer timer = new Timer
         {
             Interval = 1000
@@ -27,6 +29,7 @@ namespace Fruit_Ninja
 
         private void Back_Click(object sender, EventArgs e)
         {
+            OnChildFormClosed();
             Close();
         }
 
@@ -114,6 +117,11 @@ namespace Fruit_Ninja
 
             foreach (var user in Users.Values)
                 lbUsers.Items.Add(user);
+        }
+
+        protected virtual void OnChildFormClosed()
+        {
+            ChildFormClosed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

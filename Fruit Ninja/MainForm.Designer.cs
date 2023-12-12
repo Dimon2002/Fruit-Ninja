@@ -100,8 +100,7 @@
             this.pbHighscores.Size = new System.Drawing.Size(102, 102);
             this.pbHighscores.TabIndex = 4;
             this.pbHighscores.TabStop = false;
-            this.pbHighscores.Click += new System.EventHandler(this.Highscores_Click);
-            this.pbHighscores.MouseHover += new System.EventHandler(this.pbHighscores_MouseHover);*/
+            this.pbHighscores.Click += new System.EventHandler(this.Highscores_Click);*/
             // 
             // pbUser
             // 
@@ -116,7 +115,6 @@
             this.pbUser.TabIndex = 7;
             this.pbUser.TabStop = false;
             this.pbUser.Click += new System.EventHandler(this.User_Click);
-            this.pbUser.MouseHover += new System.EventHandler(this.pbUser_MouseHover);
             // 
             // pbExit
             // 
@@ -129,8 +127,7 @@
             this.pbExit.Size = new System.Drawing.Size(65, 77);
             this.pbExit.TabIndex = 8;
             this.pbExit.TabStop = false;
-            this.pbExit.Click += new System.EventHandler(this.pbExit_Click);
-            this.pbExit.MouseHover += new System.EventHandler(this.pbExit_MouseHover);
+            this.pbExit.Click += new System.EventHandler(this.Exit_Click);
             // 
             // pbSettings
             // 
@@ -144,7 +141,6 @@
             this.pbSettings.TabIndex = 6;
             this.pbSettings.TabStop = false;
             this.pbSettings.Click += new System.EventHandler(this.pbSettings_Click);
-            this.pbSettings.MouseHover += new System.EventHandler(this.pbSettings_MouseHover);
             // 
             // pbPlay
             // 
@@ -158,13 +154,12 @@
             this.pbPlay.TabIndex = 5;
             this.pbPlay.TabStop = false;
             this.pbPlay.Click += new System.EventHandler(this.Play_Click);
-            this.pbPlay.MouseHover += new System.EventHandler(this.pbPlay_MouseHover);
             // 
             // lblUser
             // 
             this.lblUser.AutoSize = true;
             this.lblUser.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 14, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUser.ForeColor = System.Drawing.Color.White;
             this.lblUser.Location = new System.Drawing.Point(628, 0);
             this.lblUser.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
@@ -173,7 +168,6 @@
             this.lblUser.TabIndex = 9;
             this.lblUser.Text = "Guest";
             this.lblUser.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblUser.TextChanged += new System.EventHandler(this.lblUser_TextChanged);
             // 
             // panelGame
             // 
@@ -191,7 +185,7 @@
             this.panelGame.Size = new System.Drawing.Size(784, 561);
             this.panelGame.TabIndex = 12;
             this.panelGame.Visible = false;
-            this.panelGame.Click += new System.EventHandler(this.panelGame_Click);
+            this.panelGame.Click += new System.EventHandler(this.PanelGame_Click);
             this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelGame_Paint);
             // 
             // lblTime
@@ -242,7 +236,7 @@
             this.pbUnpause.Size = new System.Drawing.Size(233, 238);
             this.pbUnpause.TabIndex = 2;
             this.pbUnpause.TabStop = false;
-            this.pbUnpause.Click += new System.EventHandler(this.pbUnpause_Click);
+            this.pbUnpause.Click += new System.EventHandler(this.UnPause_Click);
             // 
             // pbPause
             // 
@@ -255,16 +249,16 @@
             this.pbPause.TabIndex = 1;
             this.pbPause.TabStop = false;
             this.pbPause.Visible = false;
-            this.pbPause.Click += new System.EventHandler(this.pbPause_Click);
+            this.pbPause.Click += new System.EventHandler(this.Pause_Click);
             // 
             // gameTimer
             // 
-            this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
+            this.gameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
             // 
             // timeTimer
             // 
             this.timeTimer.Interval = 1000;
-            this.timeTimer.Tick += new System.EventHandler(this.timeTimer_Tick);
+            this.timeTimer.Tick += new System.EventHandler(this.ViewTimer_Tick);
             // 
             // Main
             // 

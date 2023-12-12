@@ -9,35 +9,31 @@ namespace Fruit_Ninja
     public class Game
     {
         public static Random r = new Random();
-        
+
         public Image background;
 
         public List<Element> elements = new List<Element>();
-        
-        public Score currentScore = new Score(0,new DateTime(),"");
+
+        public Score currentScore = new Score(0, new DateTime(), "");
         public int time = 5;
         public int bombsClicked = 0;
 
+        private static readonly Image[] BackgroundResources =
+        {
+            Properties.Resources.background1,
+            Properties.Resources.background2,
+            Properties.Resources.background3
+        };
+
         public Game()
         {
-            switch (r.Next(3))
-            {
-                case 0:
-                    {
-                       background = Properties.Resources.background1;
-                        break;
-                    }
-                case 1:
-                    {
-                        background = Properties.Resources.background2;
-                        break;
-                    }
-                case 2:
-                    {
-                        background = Properties.Resources.background3;
-                        break;
-                    }
-            }
+            InitializeBackground();
+        }
+
+        private void InitializeBackground()
+        {
+            var randomIndex = r.Next(BackgroundResources.Length);
+            background = BackgroundResources[randomIndex];
         }
 
         public void Draw(PaintEventArgs e)
@@ -48,16 +44,16 @@ namespace Fruit_Ninja
             }
         }
 
-        public void MoveElements()
+        public void Move()
         {
             foreach (var el in elements)
             {
                 el.Move();
             }
 
-            for(var i = elements.Count - 1; i >= 0; i--)
+            for (var i = elements.Count - 1; i >= 0; i--)
             {
-                if (elements[i].type.Equals("-10Bomb") 
+                if (elements[i].type.Equals("-10Bomb")
                    || elements[i].type.Equals("GameOverBomb")
                    || elements[i].ulCorner.Y < SettingsForm.settings.Height)
                 {
@@ -71,37 +67,44 @@ namespace Fruit_Ninja
 
         public bool CheckClick(Point point)
         {
+            var elementHandlers = new Dictionary<string, Action>
+            {
+                { "-10Bomb", () => ProcessBombClick(-10) },
+                { "Banana", () => ProcessFruitClick(2) },
+                { "Apple", () => ProcessFruitClick(3) },
+                { "Pineapple", () => ProcessFruitClick(4) },
+                { "Watermelon", () => ProcessFruitClick(5) }
+            };
+
             foreach (var el in elements.Where(el => el.IsClicked(point)))
             {
-                if (bombsClicked == 3) return true;
-
-                switch (el.type)
+                if (elementHandlers.TryGetValue(el.type, out var handler))
                 {
-                    case "-10Bomb":
-                        currentScore.SettleScore(-10);
-                        bombsClicked++;
-                        break;
-                    case "GameOverBomb":
-                        return true;
-                    case "Banana":
-                        currentScore.SettleScore(2);
-                        break;
-                    case "Apple":
-                        currentScore.SettleScore(3);
-                        break;
-                    case "Pineapple":
-                        currentScore.SettleScore(4);
-                        break;
-                    case "Watermelon":
-                        currentScore.SettleScore(5);
-                        break;
+                    handler.Invoke();
+                    elements.Remove(el);
+                    break;
                 }
 
-                elements.Remove(el);
-                break;
+                if (el.type == "GameOverBomb")
+                {
+                    return true;
+                }
             }
 
             return false;
+        }
+
+        private void ProcessBombClick(int penalty)
+        {
+            if (bombsClicked >= 3) return;
+
+            currentScore.SettleScore(penalty);
+            bombsClicked++;
+        }
+
+        private void ProcessFruitClick(int score)
+        {
+            currentScore.SettleScore(score);
         }
     }
 }
