@@ -26,11 +26,9 @@ namespace Fruit_Ninja
         public int ticks = 0;
         public string saveFile = Environment.CurrentDirectory + "\\save.txt";
 
-        private Point _startSlicePoint;
+        private List<Point> _slicePoints = new List<Point>();
         private Point _endSlicePoint;
         private bool _isSlicing;
-         
-        private List<Point> _slicePoints = new List<Point>();
 
         public Main()
         {
@@ -66,7 +64,7 @@ namespace Fruit_Ninja
         // TODO: Users Stats
         private void Highscores_Click(object sender, EventArgs e)
         {
-            new HighScoresForm().Show();
+            // new HighScoresForm().Show();
         }
 
         private void User_Click(object sender, EventArgs e)
@@ -134,16 +132,11 @@ namespace Fruit_Ninja
                 ActiveForm?.Close();
         }
 
-        // TODO: Slice figure
+        // TODO: Animation slice figure
         private void PanelGame_Click(object sender, EventArgs e)
         {
-            _startSlicePoint = PointToClient(Cursor.Position);
             _isSlicing = true;
-
             _slicePoints.Clear();
-
-            /*if (game.CheckClick(PointToClient(Cursor.Position)))
-                StopGame();*/
         }
 
         private void PanelGame_MouseMove(object sender, MouseEventArgs e)
@@ -153,20 +146,19 @@ namespace Fruit_Ninja
             _endSlicePoint = PointToClient(Cursor.Position);
             _slicePoints.Add(_endSlicePoint);
             game.DrawCurve(_slicePoints);
-            _startSlicePoint = _endSlicePoint;
         }
 
         private void PanelGame_MouseUp(object sender, MouseEventArgs e)
         {
             _isSlicing = false;
 
-            _slicePoints.Clear();
-            panelGame.Invalidate(true);
-
             if (game.CheckSlice(_slicePoints))
             {
                 StopGame();
             }
+
+            _slicePoints.Clear();
+            panelGame.Invalidate(true);
         }
 
         private void UnPause_Click(object sender, EventArgs e)

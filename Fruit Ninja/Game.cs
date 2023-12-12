@@ -75,7 +75,7 @@ namespace Fruit_Ninja
             {
                 if (points.Count >= 2)
                 {
-                    g.DrawCurve(Pens.Black, points.ToArray());
+                    g.DrawCurve(Pens.GreenYellow, points.ToArray());
                 }
             }
         }
@@ -92,35 +92,6 @@ namespace Fruit_Ninja
             };
 
             foreach (var el in elements.Where(el => el.IntersectsCurve(points)))
-            {
-                if (elementHandlers.TryGetValue(el.type, out var handler))
-                {
-                    handler.Invoke();
-                    elements.Remove(el);
-                    break;
-                }
-
-                if (el.type == "GameOverBomb")
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-        
-        public bool CheckClick(Point point)
-        {
-            var elementHandlers = new Dictionary<string, Action>
-            {
-                { "-10Bomb", () => ProcessBombClick(-10) },
-                { "Banana", () => ProcessFruitClick(2) },
-                { "Apple", () => ProcessFruitClick(3) },
-                { "Pineapple", () => ProcessFruitClick(4) },
-                { "Watermelon", () => ProcessFruitClick(5) }
-            };
-
-            foreach (var el in elements.Where(el => el.IsClicked(point)))
             {
                 if (elementHandlers.TryGetValue(el.type, out var handler))
                 {

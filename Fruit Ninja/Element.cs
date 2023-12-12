@@ -64,32 +64,17 @@ namespace Fruit_Ninja
 
         public bool IntersectsCurve(List<Point> points)
         {
-            foreach (var point in points)
-            {
-                if (IsPointInsideElement(point))
-                    return false;
-            }
-
-            return true;
-
             return points.Any(IsPointInsideElement);
         }
 
         private bool IsPointInsideElement(Point point)
         {
-
-            return true;
-            return IsClicked(point);
+            return point.X >= ulCorner.X 
+                   && point.X <= urCorner.X
+                   && point.Y >= ulCorner.Y
+                   && point.Y <= llCorner.Y;
         }
         
-        public bool IsClicked(Point p)
-        {
-            return p.X >= ulCorner.X 
-                   && p.X <= urCorner.X
-                   && p.Y >= ulCorner.Y
-                   && p.Y <= llCorner.Y;
-        }
-
         public void Generate()
         {
             var difficulty = SettingsForm.settings.Difficulty;
