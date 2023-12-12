@@ -52,11 +52,11 @@
     </Compile>
     <Compile Include="Element.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="HighscoresForm.cs">
+    <Compile Include="HighScoresForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HighscoresForm.Designer.cs">
-      <DependentUpon>HighscoresForm.cs</DependentUpon>
+    <Compile Include="HighScoresForm.Designer.cs">
+      <DependentUpon>HighScoresForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -81,8 +81,8 @@
     <Compile Include="UserForm.Designer.cs">
       <DependentUpon>UserForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="HighscoresForm.resx">
-      <DependentUpon>HighscoresForm.cs</DependentUpon>
+    <EmbeddedResource Include="HighScoresForm.resx">
+      <DependentUpon>HighScoresForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

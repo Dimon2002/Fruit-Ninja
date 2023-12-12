@@ -1,29 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace Fruit_Ninja
 {
-    public partial class HighscoresForm : Form
+    public partial class HighScoresForm : Form
     {
-        public HighscoresForm()
+        private static User Users => Main.currentUser;
+        private static List<Score> TopScores => Main.topScores;
+
+        public HighScoresForm()
         {
             InitializeComponent();
 
             lblCurrUser.Enabled = false;
             lblAllUsers.Enabled = true;
-            
+
             ResetFields();
 
             AcquireScores();
         }
 
-        private void pbBack_Click(object sender, EventArgs e)
+        private void Back_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void lblCurrUser_Click(object sender, EventArgs e)
+        private void CurrentUser_Click(object sender, EventArgs e)
         {
             lblCurrUser.Enabled = false;
             lblAllUsers.Enabled = true;
@@ -33,45 +37,43 @@ namespace Fruit_Ninja
             AcquireScores();
         }
 
-        private void AcquireScores ()
+        private void AcquireScores()
         {
-            if (Main.currentUser.scores.Count == 0)
-            {
-                return;
-            }
+            if (Users == null) { return; }
 
-            Main.currentUser.scores.Sort();
-            Main.currentUser.scores.Reverse();
+            Users.scores.Sort();
+            Users.scores.Reverse();
 
-            foreach (var score in Main.currentUser.scores)
+            foreach (var score in Users.scores)
             {
-                lbUserName.Items.Add(Main.currentUser.name);
+                lbUserName.Items.Add(Users.Name);
                 lbDate.Items.Add(score.date);
                 lbScores.Items.Add(score.points);
             }
         }
 
-        private void lblAllUsers_Click(object sender, EventArgs e)
+        private void AllUsers_Click(object sender, EventArgs e)
         {
             lblCurrUser.Enabled = true;
             lblAllUsers.Enabled = false;
+
             ResetFields();
 
-            if (Main.topScores.Count == 0) return;
+            if (TopScores.Count == 0) return;
 
-            Main.topScores.Sort();
-            Main.topScores.Reverse();
-
-            var end = 10;
+            TopScores.Sort();
+            TopScores.Reverse();
+                
+            /*var end = 10;
 
             if (Main.topScores.Count <= 10)
-                end = Main.topScores.Count;
+                end = Main.topScores.Count;*/
             
-            for (var i = 0; i < end; ++i)
+            for (var i = 0; i < TopScores.Count; ++i)
             {
-                lbUserName.Items.Add(Main.topScores.ElementAt(i).name);
-                lbDate.Items.Add(Main.topScores.ElementAt(i).date);
-                lbScores.Items.Add(Main.topScores.ElementAt(i).points);
+                lbUserName.Items.Add(TopScores.ElementAt(i).name);
+                lbDate.Items.Add(TopScores.ElementAt(i).date);
+                lbScores.Items.Add(TopScores.ElementAt(i).points);
             }
         }
 

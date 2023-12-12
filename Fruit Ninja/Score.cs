@@ -16,10 +16,7 @@ namespace Fruit_Ninja
             this.name = name;
         }
 
-        public int CompareTo(Score other)
-        {
-            return points.CompareTo(other.points);
-        }
+        public int CompareTo(Score other) => points.CompareTo(other.points);
 
         public void SettleScore(int score)
         {

@@ -15,37 +15,15 @@ namespace Fruit_Ninja
 
         private void lblOK_Click(object sender, EventArgs e)
         {
-            int width, height;
-
-            var difficulty = "";
-
-            if (lblEasy.Enabled == false)
-                difficulty = "EASY";
-            else if (lblMedium.Enabled == false)
-                difficulty = "MEDIUM";
-            else if (lblHard.Enabled == false)
-                difficulty = "HARD";
-            if (lbl800x600.Enabled == false)
-            {
-                width = 800;
-                height = 600;
-            }
-            else
-            {
-                width = 1024;
-                height = 768;
-            }
-            
-            var newSettings = new Settings(width, height, difficulty);
+            var newSettings = GetSelectedSettings();
 
             if (!CheckChanges(newSettings)) return;
 
-            var dr = MessageBox.Show(@"Do you want to save the changes?", @"Save changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-           
-            if (dr == DialogResult.Yes)
+            var result = MessageBox.Show("Do you want to save the changes?", "Save changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
             {
                 Main.resize = settings.Height != newSettings.Height;
-
                 settings = newSettings;
                 DialogResult = DialogResult.OK;
             }
@@ -64,156 +42,80 @@ namespace Fruit_Ninja
 
         private void UpdateFields()
         {
-            if (settings.Width == 800 && settings.Height == 600)
-            {
-                lbl800x600.Enabled = false;
-                lbl1024x768.Enabled = true;
-                lbl800x600.Cursor = Cursors.Default;
-                lbl1024x768.Cursor = Cursors.Hand;
-            }
-            else
-            {
-                lbl1024x768.Enabled = false;
-                lbl800x600.Enabled = true;
-                lbl800x600.Cursor = Cursors.Hand;
-                lbl1024x768.Cursor = Cursors.Default;
-            }
-
-            switch (settings.Difficulty)
-            {
-                case "EASY":
-                    lblEasy.Enabled = false;
-                    lblMedium.Enabled = true;
-                    lblHard.Enabled = true;
-                    lblEasy.Cursor = Cursors.Default;
-                    lblMedium.Cursor = Cursors.Hand;
-                    lblHard.Cursor = Cursors.Hand;
-                    break;
-                case "MEDIUM":
-                    lblEasy.Enabled = true;
-                    lblMedium.Enabled = false;
-                    lblHard.Enabled = true;
-                    lblEasy.Cursor = Cursors.Hand;
-                    lblMedium.Cursor = Cursors.Default;
-                    lblHard.Cursor = Cursors.Hand;
-                    break;
-                case "HARD":
-                    lblEasy.Enabled = true;
-                    lblMedium.Enabled = true;
-                    lblHard.Enabled = false;
-                    lblEasy.Cursor = Cursors.Hand;
-                    lblMedium.Cursor = Cursors.Hand;
-                    lblHard.Cursor = Cursors.Default;
-                    break;
-            }
+            UpdateResolutionFields();
+            UpdateDifficultyFields();
         }
 
-        public bool CheckChanges(Settings newSettings)
+        private void UpdateResolutionFields()
+        {
+            lbl800x600.Enabled = settings.Width != 800 || settings.Height != 600;
+            lbl1024x768.Enabled = !lbl800x600.Enabled;
+
+            lbl800x600.Cursor = lbl800x600.Enabled ? Cursors.Hand : Cursors.Default;
+            lbl1024x768.Cursor = lbl1024x768.Enabled ? Cursors.Hand : Cursors.Default;
+        }
+
+        private void UpdateDifficultyFields()
+        {
+            lblEasy.Enabled = settings.Difficulty != "EASY";
+            lblMedium.Enabled = settings.Difficulty != "MEDIUM";
+            lblHard.Enabled = settings.Difficulty != "HARD";
+
+            lblEasy.Cursor = lblEasy.Enabled ? Cursors.Hand : Cursors.Default;
+            lblMedium.Cursor = lblMedium.Enabled ? Cursors.Hand : Cursors.Default;
+            lblHard.Cursor = lblHard.Enabled ? Cursors.Hand : Cursors.Default;
+        }
+
+        private Settings GetSelectedSettings()
+        {
+            int width = lbl800x600.Enabled ? 800 : 1024;
+            int height = lbl800x600.Enabled ? 600 : 768;
+
+            string difficulty = lblEasy.Enabled ? "EASY" : lblMedium.Enabled ? "MEDIUM" : "HARD";
+
+            return new Settings(width, height, difficulty);
+        }
+
+        private bool CheckChanges(Settings newSettings)
         {
             return settings.CompareTo(newSettings) == 1;
         }
 
-        private void lbl1024x768_Click(object sender, EventArgs e)
-        {
-            if (lbl1024x768.Enabled == true)
-            {
-                lbl1024x768.Enabled = false;
-                lbl800x600.Enabled = true;
-                lbl800x600.Cursor = Cursors.Hand;
-                lbl1024x768.Cursor = Cursors.Default;
-            }
-
-            CheckOk();
-        }
-
-        private void lbl800x600_Click(object sender, EventArgs e)
-        {
-            if (lbl800x600.Enabled == true)
-            {
-                lbl800x600.Enabled = false;
-                lbl1024x768.Enabled = true;
-                lbl800x600.Cursor = Cursors.Default;
-                lbl1024x768.Cursor = Cursors.Hand;
-            }
-
-            CheckOk();
-        }
-
-        private void lblEasy_Click(object sender, EventArgs e)
-        {
-            if (lblEasy.Enabled == true)
-            {
-                lblEasy.Enabled = false;
-                lblMedium.Enabled = true;
-                lblHard.Enabled = true;
-                lblEasy.Cursor = Cursors.Default;
-                lblMedium.Cursor = Cursors.Hand;
-                lblHard.Cursor = Cursors.Hand;
-            }
-
-            CheckOk();
-        }
-
-        private void lblMedium_Click(object sender, EventArgs e)
-        {
-            if (lblMedium.Enabled == true)
-            {
-                lblEasy.Enabled = true;
-                lblMedium.Enabled = false;
-                lblHard.Enabled = true;
-                lblEasy.Cursor = Cursors.Hand;
-                lblMedium.Cursor = Cursors.Default;
-                lblHard.Cursor = Cursors.Hand;
-            }
-
-            CheckOk();
-        }
-
-        private void lblHard_Click(object sender, EventArgs e)
-        {
-            if (lblHard.Enabled == true)
-            {
-                lblEasy.Enabled = true;
-                lblMedium.Enabled = true;
-                lblHard.Enabled = false;
-                lblEasy.Cursor = Cursors.Hand;
-                lblMedium.Cursor = Cursors.Hand;
-                lblHard.Cursor = Cursors.Default;
-            }
-
-            CheckOk();
-        }
-
-        private void CheckOk()
+        private void UpdateOkButtonState()
         {
             var resolution = $"{settings.Width}x{settings.Height}";
-
             var difficulty = settings.Difficulty;
 
-            var selectedResolution = lbl1024x768.Enabled 
-                                            ? lbl800x600.Text 
-                                            : lbl1024x768.Text;
+            var selectedResolution = lbl800x600.Enabled ? lbl800x600.Text : lbl1024x768.Text;
+            var selectedDifficulty = lblEasy.Enabled ? lblEasy.Text.ToUpper() : lblMedium.Text.ToUpper();
 
-            string selectedDifficulty;
+            lblOK.Enabled = !(selectedResolution.Equals(resolution) && selectedDifficulty.Equals(difficulty));
+        }
 
-            if (lblEasy.Enabled)
-            {
-                selectedDifficulty = lblMedium.Enabled 
-                                     ? lblHard.Text.ToUpper() 
-                                     : lblMedium.Text.ToUpper();
-            }
-            else
-            {
-                selectedDifficulty = lblEasy.Text.ToUpper();
-            }
+        private void UpdateResolutionLabel(object sender, EventArgs e)
+        {
+            var label = (Label)sender;
 
-            if (selectedResolution.Equals(resolution) && selectedDifficulty.Equals(difficulty))
+            if (label.Enabled)
             {
-                lblOK.Enabled = false;
+                lbl800x600.Enabled = !lbl800x600.Enabled;
+                lbl1024x768.Enabled = !lbl800x600.Enabled;
+
+                UpdateOkButtonState();
             }
-            else
+        }
+
+        private void UpdateDifficultyLabel(object sender, EventArgs e)
+        {
+            var label = (Label)sender;
+
+            if (label.Enabled)
             {
-                lblOK.Enabled = true;
+                lblEasy.Enabled = label == lblEasy ? false : true;
+                lblMedium.Enabled = label == lblMedium ? false : true;
+                lblHard.Enabled = label == lblHard ? false : true;
+
+                UpdateOkButtonState();
             }
         }
     }

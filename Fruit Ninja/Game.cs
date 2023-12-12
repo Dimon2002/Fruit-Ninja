@@ -15,7 +15,7 @@ namespace Fruit_Ninja
         public List<Element> elements = new List<Element>();
         
         public Score currentScore = new Score(0,new DateTime(),"");
-        public int time = 60;
+        public int time = 5;
         public int bombsClicked = 0;
 
         public Game()

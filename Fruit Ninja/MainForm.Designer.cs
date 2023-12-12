@@ -89,9 +89,10 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 561);
             this.tableLayoutPanel1.TabIndex = 10;
             // 
-            // pbHighscores
+            // Highscores
             // 
-            this.pbHighscores.BackColor = System.Drawing.Color.Transparent;
+            // TODO: Доделать коректную работу с файлом
+            /*this.pbHighscores.BackColor = System.Drawing.Color.Transparent;
             this.pbHighscores.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbHighscores.Image = global::Fruit_Ninja.Properties.Resources.trophy;
             this.pbHighscores.Location = new System.Drawing.Point(3, 3);
@@ -99,8 +100,8 @@
             this.pbHighscores.Size = new System.Drawing.Size(102, 102);
             this.pbHighscores.TabIndex = 4;
             this.pbHighscores.TabStop = false;
-            this.pbHighscores.Click += new System.EventHandler(this.pbHighscores_Click);
-            this.pbHighscores.MouseHover += new System.EventHandler(this.pbHighscores_MouseHover);
+            this.pbHighscores.Click += new System.EventHandler(this.Highscores_Click);
+            this.pbHighscores.MouseHover += new System.EventHandler(this.pbHighscores_MouseHover);*/
             // 
             // pbUser
             // 
@@ -114,7 +115,7 @@
             this.pbUser.Size = new System.Drawing.Size(67, 78);
             this.pbUser.TabIndex = 7;
             this.pbUser.TabStop = false;
-            this.pbUser.Click += new System.EventHandler(this.pbUser_Click);
+            this.pbUser.Click += new System.EventHandler(this.User_Click);
             this.pbUser.MouseHover += new System.EventHandler(this.pbUser_MouseHover);
             // 
             // pbExit
@@ -156,7 +157,7 @@
             this.pbPlay.Size = new System.Drawing.Size(107, 106);
             this.pbPlay.TabIndex = 5;
             this.pbPlay.TabStop = false;
-            this.pbPlay.Click += new System.EventHandler(this.pbPlay_Click);
+            this.pbPlay.Click += new System.EventHandler(this.Play_Click);
             this.pbPlay.MouseHover += new System.EventHandler(this.pbPlay_MouseHover);
             // 
             // lblUser
@@ -191,7 +192,7 @@
             this.panelGame.TabIndex = 12;
             this.panelGame.Visible = false;
             this.panelGame.Click += new System.EventHandler(this.panelGame_Click);
-            this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.panelGame_Paint);
+            this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelGame_Paint);
             // 
             // lblTime
             // 
@@ -228,7 +229,7 @@
             this.pbQuit.Size = new System.Drawing.Size(58, 53);
             this.pbQuit.TabIndex = 3;
             this.pbQuit.TabStop = false;
-            this.pbQuit.Click += new System.EventHandler(this.pbQuit_Click);
+            this.pbQuit.Click += new System.EventHandler(this.Quit_Click);
             // 
             // pbUnpause
             // 

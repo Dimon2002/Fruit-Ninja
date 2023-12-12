@@ -6,19 +6,11 @@ namespace Fruit_Ninja
     [Serializable]
     public class User
     {
-        public string name;
-        public List<Score> scores;
+        public string Name { get; set; }
 
-        public User(string name)
-        {
-            scores = new List<Score>();
-            this.name = name;
-        }
-        
-        public override string ToString()
-        {
-            return name;
-        }
+        public List<Score> scores = new List<Score>();
+
+        public override string ToString() => Name;
 
         public void AddScore(Score score)
         {

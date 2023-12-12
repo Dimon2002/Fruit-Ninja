@@ -23,7 +23,7 @@ namespace Fruit_Ninja
             e.ToolTipSize = _size;
         }
 
-        private void OnDraw(object sender, DrawToolTipEventArgs e) 
+        private static void OnDraw(object sender, DrawToolTipEventArgs e) 
         {
             var g = e.Graphics;
 
