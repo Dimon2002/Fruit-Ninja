@@ -7,8 +7,8 @@ namespace Fruit_Ninja
 {
     public partial class HighScoresForm : Form
     {
-        private static User Users => Main.currentUser;
-        private static List<Score> TopScores => Main.topScores;
+        private static User Users => Main.CurrentUser;
+        private static List<Score> TopScores => Main.TopScores;
 
         public HighScoresForm()
         {
@@ -41,14 +41,14 @@ namespace Fruit_Ninja
         {
             if (Users == null) { return; }
 
-            Users.scores.Sort();
-            Users.scores.Reverse();
+            Users.Scores.Sort();
+            Users.Scores.Reverse();
 
-            foreach (var score in Users.scores)
+            foreach (var score in Users.Scores)
             {
                 lbUserName.Items.Add(Users.Name);
-                lbDate.Items.Add(score.date);
-                lbScores.Items.Add(score.points);
+                lbDate.Items.Add(score.Date);
+                lbScores.Items.Add(score.Points);
             }
         }
 
@@ -63,17 +63,12 @@ namespace Fruit_Ninja
 
             TopScores.Sort();
             TopScores.Reverse();
-                
-            /*var end = 10;
-
-            if (Main.topScores.Count <= 10)
-                end = Main.topScores.Count;*/
             
             for (var i = 0; i < TopScores.Count; ++i)
             {
-                lbUserName.Items.Add(TopScores.ElementAt(i).name);
-                lbDate.Items.Add(TopScores.ElementAt(i).date);
-                lbScores.Items.Add(TopScores.ElementAt(i).points);
+                lbUserName.Items.Add(TopScores.ElementAt(i).Name);
+                lbDate.Items.Add(TopScores.ElementAt(i).Date);
+                lbScores.Items.Add(TopScores.ElementAt(i).Points);
             }
         }
 

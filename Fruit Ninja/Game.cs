@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Fruit_Ninja
@@ -71,12 +70,12 @@ namespace Fruit_Ninja
             {
                 if (Elements[i].type.Equals("-10Bomb")
                     || Elements[i].type.Equals("GameOverBomb")
-                    || Elements[i].ulCorner.Y < SettingsForm.settings.Height)
+                    || Elements[i].ulCorner.Y < SettingsForm.Settings.Height)
                 {
                     continue;
                 }
 
-                CurrentScore.points -= 2;
+                CurrentScore.Points -= 2;
                 Elements.Remove(Elements[i]);
             }
         }
@@ -96,8 +95,6 @@ namespace Fruit_Ninja
                             g.DrawCurve(pen, points.ToArray());
                         }
                     }
-
-                    //g.DrawCurve(Pens.GreenYellow, points.ToArray());
                 }
             });
         }
@@ -107,12 +104,7 @@ namespace Fruit_Ninja
             return Colors[new Random(seed).Next(Colors.Length)];
         }
 
-        private static Color GetRandomColor()
-        {
-            return Color.FromArgb(R.Next(255), R.Next(255), R.Next(255));
-        }
-
-        public bool IsCut(List<Point> points)
+        public bool IsGameActive(List<Point> points)
         { 
             var elementHandlers = new Dictionary<string, Action>
             {
@@ -129,16 +121,16 @@ namespace Fruit_Ninja
                 {
                     handler.Invoke();
                     Elements.Remove(el);
-                    break;
+                    return true;
                 }
 
                 if (el.type == "GameOverBomb")
                 {
-                    return true;
+                    return false;
                 }
             }
 
-            return false;
+            return true;
         }
 
         private void ProcessBombClick(int penalty)

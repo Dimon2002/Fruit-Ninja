@@ -9,16 +9,16 @@ namespace Fruit_Ninja
     {
         public event EventHandler ChildFormClosed;
         
-        public Timer timer = new Timer
+        public Timer Timer = new Timer
         {
             Interval = 1000
         };
 
-        private static Dictionary<string, User> Users => Main.users;
+        private static Dictionary<string, User> Users => Main.Users;
 
         private static User CurrentUser
         {
-            set => Main.currentUser = value;
+            set => Main.CurrentUser = value;
         }
 
         public UserForm()
@@ -68,15 +68,15 @@ namespace Fruit_Ninja
 
             lblInfo.ForeColor = Color.White;
 
-            timer.Tick += Timer_Tick;
-            timer.Start();
+            Timer.Tick += Timer_Tick;
+            Timer.Start();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             lblInfo.ForeColor = Color.Black;
-            timer.Tick -= Timer_Tick;
-            timer.Stop();
+            Timer.Tick -= Timer_Tick;
+            Timer.Stop();
         }
 
         private void Users_DrawItem(object sender, DrawItemEventArgs e)

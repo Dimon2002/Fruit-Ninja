@@ -8,13 +8,13 @@ namespace Fruit_Ninja
     {
         public string Name { get; set; }
 
-        public List<Score> scores = new List<Score>();
-
+        public List<Score> Scores = new List<Score>();
+        
         public override string ToString() => Name;
 
         public void AddScore(Score score)
         {
-            scores.Add(score);
+            Scores.Add(score);
         }
     }
 }

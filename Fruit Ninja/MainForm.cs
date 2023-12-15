@@ -12,20 +12,20 @@ namespace Fruit_Ninja
 {
     public partial class Main : Form
     {
-        public static Dictionary<string, User> users = new Dictionary<string, User>()
+        internal static Dictionary<string, User> Users = new Dictionary<string, User>()
         {
             { "Guest", new User() {Name = "Guest"} }
         };
 
-        public static User currentUser = new User() { Name = "Guest" };
-        public static List<Score> topScores = new List<Score>();
+        internal static User CurrentUser = new User() { Name = "Guest" };
+        internal static List<Score> TopScores = new List<Score>();
 
-        public static bool resize = false;
+        internal static bool resize = false;
 
-        public Game game;
-        public bool canClick = false;
-        public int ticks = 0;
-        public string saveFile = Environment.CurrentDirectory + "\\save.txt";
+        internal Game Game;
+        internal bool CanClick = false;
+        internal int Ticks = 0;
+        internal string SaveFile = Environment.CurrentDirectory + "\\save.txt";
 
         private readonly List<Point> _slicePoints = new List<Point>();
         private Point _endSlicePoint;
@@ -37,7 +37,7 @@ namespace Fruit_Ninja
         {
             InitializeComponent();
 
-            SettingsForm.settings = new Settings(800, 600, "EASY");
+            SettingsForm.Settings = new Settings(800, 600, "EASY");
 
             // LoadFromFile();
 
@@ -60,8 +60,8 @@ namespace Fruit_Ninja
 
         private void PanelGame_Paint(object sender, PaintEventArgs e)
         {
-            game.Draw(e);
-            lblTime.Text = $@"00:{game.Time:00}";
+            Game.Draw(e);
+            lblTime.Text = $@"00:{Game.Time:00}";
         }
 
         // TODO: Users Stats
@@ -134,8 +134,7 @@ namespace Fruit_Ninja
             if (dr == DialogResult.Yes)
                 ActiveForm?.Close();
         }
-
-        // TODO: Animation slice figure
+        
         private void PanelGame_Click(object sender, EventArgs e)
         {
             _isSlicing = true;
@@ -155,15 +154,14 @@ namespace Fruit_Ninja
             _endSlicePoint = PointToClient(Cursor.Position);
             _slicePoints.Add(_endSlicePoint);
 
-            Task.Factory.StartNew(() => game.DrawCurve(_slicePoints, _r));
-            // game.DrawCurve(_slicePoints);
+            Task.Factory.StartNew(() => Game.DrawCurve(_slicePoints,  _r));
         }
 
         private void PanelGame_MouseUp(object sender, MouseEventArgs e)
         {
             _isSlicing = false;
 
-            if (game.IsCut(_slicePoints))
+            if (!Game.IsGameActive(_slicePoints))
             {
                 StopGame();
             }
@@ -180,7 +178,7 @@ namespace Fruit_Ninja
             pbUnpause.Visible = false;
 
             pbPause.Visible = true;
-            canClick = true;
+            CanClick = true;
 
             gameTimer.Start();
             timeTimer.Start();
@@ -191,7 +189,7 @@ namespace Fruit_Ninja
             pbUnpause.Visible = true;
             pbQuit.Visible = true;
 
-            canClick = false;
+            CanClick = false;
             pbPause.Visible = false;
 
             gameTimer.Stop();
@@ -200,33 +198,33 @@ namespace Fruit_Ninja
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            lblScore.Text = game.CurrentScore.points.ToString();
+            lblScore.Text = Game.CurrentScore.Points.ToString();
 
             if (lblScore.Right > Width)
                 lblScore.Left = Width - lblScore.Width - 20;
 
             var speed = 0;
 
-            switch (SettingsForm.settings.Difficulty)
+            switch (SettingsForm.Settings.Difficulty)
             {
                 case "EASY": speed = 40; break;
                 case "MEDIUM": speed = 30; break;
                 case "HARD": speed = 20; break;
             }
 
-            if (ticks++ % speed == 0)
-                game.Elements.Add(new Element());
+            if (Ticks++ % speed == 0)
+                Game.Elements.Add(new Element());
 
-            game.Move();
+            Game.Move();
 
             Invalidate(true);
         }
 
         private void ViewTimer_Tick(object sender, EventArgs e)
         {
-            lblTime.Text = $@"00:{--game.Time:00}";
+            lblTime.Text = $@"00:{--Game.Time:00}";
 
-            if (game.Time == 0)
+            if (Game.Time == 0)
                 StopGame();
         }
 
@@ -240,10 +238,10 @@ namespace Fruit_Ninja
 
             lblScore.Text = @"0";
 
-            game = new Game(this);
+            Game = new Game(this);
 
             if (ActiveForm != null)
-                ActiveForm.BackgroundImage = game.Background;
+                ActiveForm.BackgroundImage = Game.Background;
 
             SetGameTimeInterval();
 
@@ -252,7 +250,7 @@ namespace Fruit_Ninja
 
         private void SetGameTimeInterval()
         {
-            switch (SettingsForm.settings.Difficulty)
+            switch (SettingsForm.Settings.Difficulty)
             {
                 case "EASY": gameTimer.Interval = 50; break;
                 case "MEDIUM": gameTimer.Interval = 30; break;
@@ -262,16 +260,16 @@ namespace Fruit_Ninja
 
         public void StopGame()
         {
-            var currentScore = new Score(int.Parse(lblScore.Text), DateTime.Now, currentUser.Name);
+            var currentScore = new Score(int.Parse(lblScore.Text), DateTime.Now, CurrentUser.Name);
 
             gameTimer.Stop();
             timeTimer.Stop();
 
-            topScores.Add(currentScore);
-            currentUser.AddScore(currentScore);
+            TopScores.Add(currentScore);
+            CurrentUser.AddScore(currentScore);
 
             const string title = "Time Up :(";
-            var text = $"No more time {currentUser.Name}. You have scored {game.CurrentScore.points} points! Play again?";
+            var text = $"No more time {CurrentUser.Name}. You have scored {Game.CurrentScore.Points} points! Play again?";
 
             var dr = MessageBox.Show(text, title, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
@@ -304,7 +302,7 @@ namespace Fruit_Ninja
 
         private void UserForm_ChildFormClosed(object sender, EventArgs e)
         {
-            lblUser.Text = currentUser.ToString();
+            lblUser.Text = CurrentUser.ToString();
 
             Invalidate(true);
 
@@ -318,9 +316,9 @@ namespace Fruit_Ninja
         public void SaveToFile()
         {
             var bf = new BinaryFormatter();
-            var fs = new FileStream(saveFile, FileMode.Create, FileAccess.Write);
+            var fs = new FileStream(SaveFile, FileMode.Create, FileAccess.Write);
 
-            bf.Serialize(fs, users.Values.ToArray());
+            bf.Serialize(fs, Users.Values.ToArray());
             fs.Close();
 
         } // try catch
@@ -329,32 +327,32 @@ namespace Fruit_Ninja
         public void LoadFromFile()
         {
             var bf = new BinaryFormatter();
-            var fs = new FileStream(saveFile, FileMode.Open, FileAccess.Read);
+            var fs = new FileStream(SaveFile, FileMode.Open, FileAccess.Read);
             var userList = (User[])bf.Deserialize(fs);
 
             fs.Close();
 
-            users = userList.ToDictionary((x) => x.Name, (x) => x);
+            Users = userList.ToDictionary((x) => x.Name, (x) => x);
 
-            foreach (var s in users.Values.SelectMany(user => user.scores))
-                topScores?.Add(s);
+            foreach (var s in Users.Values.SelectMany(user => user.Scores))
+                TopScores?.Add(s);
 
             var u = new User() { Name = "Guest" };
 
-            if (!users.ContainsKey("Guest"))
+            if (!Users.ContainsKey("Guest"))
             {
-                users.Add("Guest", u);
+                Users.Add("Guest", u);
             }
             else
             {
-                foreach (var us in users.Values.Where(us => us.Name.Equals("Guest")))
+                foreach (var us in Users.Values.Where(us => us.Name.Equals("Guest")))
                 {
                     u = us;
                     break;
                 }
             }
 
-            currentUser = u;
+            CurrentUser = u;
 
         } // try catch
     }

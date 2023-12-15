@@ -50,7 +50,7 @@ namespace Fruit_Ninja
                     directionX = 0;
                     enabled = false;
                 }
-                else if (ulCorner.X <= 0 || urCorner.X >= SettingsForm.settings.Width)
+                else if (ulCorner.X <= 0 || urCorner.X >= SettingsForm.Settings.Width)
                 {
                     directionY = -10;
                     directionX = -directionX;
@@ -77,7 +77,7 @@ namespace Fruit_Ninja
         
         public void Generate()
         {
-            var difficulty = SettingsForm.settings.Difficulty;
+            var difficulty = SettingsForm.Settings.Difficulty;
             var availableElements = 0;
 
             switch (difficulty.ToUpper())
@@ -138,12 +138,12 @@ namespace Fruit_Ninja
                     }
             }
 
-            var positions = (SettingsForm.settings.Width - 20) / image.Width;
+            var positions = (SettingsForm.Settings.Width - 20) / image.Width;
             var currentPosition = r.Next(positions);
 
-            ulCorner = new Point(currentPosition * image.Width + 10, SettingsForm.settings.Height - image.Height / 2);
-            urCorner = new Point((currentPosition + 1) * image.Width, SettingsForm.settings.Height - image.Height / 2);
-            llCorner = new Point(currentPosition * image.Width + 10, SettingsForm.settings.Height + image.Height / 2);
+            ulCorner = new Point(currentPosition * image.Width + 10, SettingsForm.Settings.Height - image.Height / 2);
+            urCorner = new Point((currentPosition + 1) * image.Width, SettingsForm.Settings.Height - image.Height / 2);
+            llCorner = new Point(currentPosition * image.Width + 10, SettingsForm.Settings.Height + image.Height / 2);
 
             directionX = 0;
             directionY = -10;

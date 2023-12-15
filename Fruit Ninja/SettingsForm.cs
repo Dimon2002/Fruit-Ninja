@@ -16,7 +16,7 @@ namespace Fruit_Ninja
             Hard
         }
 
-        public static Settings settings;
+        public static Settings Settings;
 
         public SettingsForm()
         {
@@ -55,9 +55,9 @@ namespace Fruit_Ninja
 
             if (dr == DialogResult.Yes)
             {
-                Main.resize = settings.Height != newSettings.Height;
+                Main.resize = Settings.Height != newSettings.Height;
 
-                settings = newSettings;
+                Settings = newSettings;
                 DialogResult = DialogResult.OK;
             }
             else
@@ -75,7 +75,7 @@ namespace Fruit_Ninja
 
         private void UpdateFields()
         {
-            lbl800x600.Enabled = settings.Width == 1024;
+            lbl800x600.Enabled = Settings.Width == 1024;
             lbl1024x768.Enabled = !lbl800x600.Enabled;
             lbl800x600.Cursor = lbl800x600.Enabled ? Cursors.Hand : Cursors.Default;
             lbl1024x768.Cursor = lbl1024x768.Enabled ? Cursors.Hand : Cursors.Default;
@@ -89,7 +89,7 @@ namespace Fruit_Ninja
 
         private void SetSelectedDifficulty()
         {
-            switch (settings.Difficulty)
+            switch (Settings.Difficulty)
             {
                 case EasyDifficulty:
                     SetDifficulty(DifficultyLevel.Easy);
@@ -105,13 +105,13 @@ namespace Fruit_Ninja
 
         private void SetDifficultyLabel(Label label, DifficultyLevel level)
         {
-            label.Enabled = settings.Difficulty != level.ToString();
+            label.Enabled = Settings.Difficulty != level.ToString();
             label.Cursor = label.Enabled ? Cursors.Hand : Cursors.Default;
         }
 
         public bool CheckChanges(Settings newSettings)
         {
-            return settings.CompareTo(newSettings) > 0;
+            return Settings.CompareTo(newSettings) > 0;
         }
 
         private void SetDifficulty(DifficultyLevel level)
@@ -164,8 +164,8 @@ namespace Fruit_Ninja
 
         private void CheckOk()
         {
-            var resolution = $"{settings.Width}x{settings.Height}";
-            var difficulty = settings.Difficulty;
+            var resolution = $"{Settings.Width}x{Settings.Height}";
+            var difficulty = Settings.Difficulty;
 
             var selectedResolution = lbl1024x768.Enabled ? lbl800x600.Text : lbl1024x768.Text;
             string selectedDifficulty;

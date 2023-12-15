@@ -5,22 +5,22 @@ namespace Fruit_Ninja
     [Serializable]
     public class Score : IComparable<Score>
     {
-        public int points;
-        public DateTime date;
-        public string name;
+        public int Points;
+        public DateTime Date;
+        public string Name;
 
         public Score(int points, DateTime date, string name)
         {
-            this.points = points;
-            this.date = date;
-            this.name = name;
+            Points = points;
+            Date = date;
+            Name = name;
         }
 
-        public int CompareTo(Score other) => points.CompareTo(other.points);
+        public int CompareTo(Score other) => Points.CompareTo(other.Points);
 
         public void SettleScore(int score)
         {
-            points += score;
+            Points += score;
         }
     }
 }
