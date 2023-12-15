@@ -27,9 +27,11 @@ namespace Fruit_Ninja
         public int ticks = 0;
         public string saveFile = Environment.CurrentDirectory + "\\save.txt";
 
-        private List<Point> _slicePoints = new List<Point>();
+        private readonly List<Point> _slicePoints = new List<Point>();
         private Point _endSlicePoint;
         private bool _isSlicing;
+
+        private int _r;
 
         public Main()
         {
@@ -153,7 +155,7 @@ namespace Fruit_Ninja
             _endSlicePoint = PointToClient(Cursor.Position);
             _slicePoints.Add(_endSlicePoint);
 
-            Task.Factory.StartNew(() => game.DrawCurve(_slicePoints));
+            Task.Factory.StartNew(() => game.DrawCurve(_slicePoints, _r));
             // game.DrawCurve(_slicePoints);
         }
 
@@ -165,6 +167,8 @@ namespace Fruit_Ninja
             {
                 StopGame();
             }
+
+            _r = new Random().Next();
 
             _slicePoints.Clear();
             panelGame.Invalidate(true);

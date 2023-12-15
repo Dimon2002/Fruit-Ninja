@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -21,11 +22,22 @@ namespace Fruit_Ninja
         public int Time = 25;
         public int BombsClicked = 0;
 
+        private const int PenWidth = 5;
+        
         private static readonly Image[] BackgroundResources =
         {
             Properties.Resources.background1,
             Properties.Resources.background2,
             Properties.Resources.background3
+        };
+        
+        private static readonly Color[] Colors = 
+        {
+            (Color.CadetBlue),
+            (Color.Aqua),
+            (Color.BurlyWood),
+            (Color.Crimson),
+            (Color.DarkGreen),
         };
 
         public Game(Main mainForm)
@@ -69,18 +81,35 @@ namespace Fruit_Ninja
             }
         }
 
-        public void DrawCurve(List<Point> points)
+        public void DrawCurve(List<Point> points, int seed)
         {
+            if (points.Count < 2) return;
+            
             MainForm.panelGame.Invoke((MethodInvoker)delegate
             {
                 using (var g = MainForm.panelGame.CreateGraphics())
                 {
-                    if (points.Count >= 2)
+                    using (var brush = new LinearGradientBrush(points.First(), points.Last(), GetColor(seed), GetColor(seed/2)))
                     {
-                        g.DrawCurve(Pens.GreenYellow, points.ToArray());
+                        using (var pen = new Pen(brush, PenWidth))
+                        {
+                            g.DrawCurve(pen, points.ToArray());
+                        }
                     }
+
+                    //g.DrawCurve(Pens.GreenYellow, points.ToArray());
                 }
             });
+        }
+
+        private static Color GetColor(int seed)
+        {
+            return Colors[new Random(seed).Next(Colors.Length)];
+        }
+
+        private static Color GetRandomColor()
+        {
+            return Color.FromArgb(R.Next(255), R.Next(255), R.Next(255));
         }
 
         public bool IsCut(List<Point> points)

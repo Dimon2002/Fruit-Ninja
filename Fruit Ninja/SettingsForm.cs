@@ -5,6 +5,17 @@ namespace Fruit_Ninja
 {
     public partial class SettingsForm : Form
     {
+        private const string EasyDifficulty = "EASY";
+        private const string MediumDifficulty = "MEDIUM";
+        private const string HardDifficulty = "HARD";
+
+        private enum DifficultyLevel
+        {
+            Easy,
+            Medium,
+            Hard
+        }
+
         public static Settings settings;
 
         public SettingsForm()
@@ -15,15 +26,37 @@ namespace Fruit_Ninja
 
         private void lblOK_Click(object sender, EventArgs e)
         {
-            var newSettings = GetSelectedSettings();
+            int width, height;
+            var difficulty = "";
+
+            if (!lblEasy.Enabled)
+                difficulty = EasyDifficulty;
+            else if (!lblMedium.Enabled)
+                difficulty = MediumDifficulty;
+            else if (!lblHard.Enabled)
+                difficulty = HardDifficulty;
+
+            if (!lbl800x600.Enabled)
+            {
+                width = 800;
+                height = 600;
+            }
+            else
+            {
+                width = 1024;
+                height = 768;
+            }
+
+            var newSettings = new Settings(width, height, difficulty);
 
             if (!CheckChanges(newSettings)) return;
 
-            var result = MessageBox.Show("Do you want to save the changes?", "Save changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            var dr = MessageBox.Show(@"Do you want to save the changes?", @"Save changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-            if (result == DialogResult.Yes)
+            if (dr == DialogResult.Yes)
             {
                 Main.resize = settings.Height != newSettings.Height;
+
                 settings = newSettings;
                 DialogResult = DialogResult.OK;
             }
@@ -42,81 +75,111 @@ namespace Fruit_Ninja
 
         private void UpdateFields()
         {
-            UpdateResolutionFields();
-            UpdateDifficultyFields();
-        }
-
-        private void UpdateResolutionFields()
-        {
-            lbl800x600.Enabled = settings.Width != 800 || settings.Height != 600;
+            lbl800x600.Enabled = settings.Width == 1024;
             lbl1024x768.Enabled = !lbl800x600.Enabled;
-
             lbl800x600.Cursor = lbl800x600.Enabled ? Cursors.Hand : Cursors.Default;
             lbl1024x768.Cursor = lbl1024x768.Enabled ? Cursors.Hand : Cursors.Default;
+
+            SetDifficultyLabel(lblEasy, DifficultyLevel.Easy);
+            SetDifficultyLabel(lblMedium, DifficultyLevel.Medium);
+            SetDifficultyLabel(lblHard, DifficultyLevel.Hard);
+
+            SetSelectedDifficulty();
         }
 
-        private void UpdateDifficultyFields()
+        private void SetSelectedDifficulty()
         {
-            lblEasy.Enabled = settings.Difficulty != "EASY";
-            lblMedium.Enabled = settings.Difficulty != "MEDIUM";
-            lblHard.Enabled = settings.Difficulty != "HARD";
+            switch (settings.Difficulty)
+            {
+                case EasyDifficulty:
+                    SetDifficulty(DifficultyLevel.Easy);
+                    break;
+                case MediumDifficulty:
+                    SetDifficulty(DifficultyLevel.Medium);
+                    break;
+                case HardDifficulty:
+                    SetDifficulty(DifficultyLevel.Hard);
+                    break;
+            }
+        }
+
+        private void SetDifficultyLabel(Label label, DifficultyLevel level)
+        {
+            label.Enabled = settings.Difficulty != level.ToString();
+            label.Cursor = label.Enabled ? Cursors.Hand : Cursors.Default;
+        }
+
+        public bool CheckChanges(Settings newSettings)
+        {
+            return settings.CompareTo(newSettings) > 0;
+        }
+
+        private void SetDifficulty(DifficultyLevel level)
+        {
+            lblEasy.Enabled = level != DifficultyLevel.Easy;
+            lblMedium.Enabled = level != DifficultyLevel.Medium;
+            lblHard.Enabled = level != DifficultyLevel.Hard;
 
             lblEasy.Cursor = lblEasy.Enabled ? Cursors.Hand : Cursors.Default;
             lblMedium.Cursor = lblMedium.Enabled ? Cursors.Hand : Cursors.Default;
             lblHard.Cursor = lblHard.Enabled ? Cursors.Hand : Cursors.Default;
+
+            CheckOk();
         }
 
-        private Settings GetSelectedSettings()
+        private void lbl1024x768_Click(object sender, EventArgs e)
         {
-            int width = lbl800x600.Enabled ? 800 : 1024;
-            int height = lbl800x600.Enabled ? 600 : 768;
-
-            string difficulty = lblEasy.Enabled ? "EASY" : lblMedium.Enabled ? "MEDIUM" : "HARD";
-
-            return new Settings(width, height, difficulty);
+            SetResolution(1024, 768);
         }
 
-        private bool CheckChanges(Settings newSettings)
+        private void lbl800x600_Click(object sender, EventArgs e)
         {
-            return settings.CompareTo(newSettings) == 1;
+            SetResolution(800, 600);
         }
 
-        private void UpdateOkButtonState()
+        private void SetResolution(int width, int height)
+        {
+            lbl800x600.Enabled = width == 1024 && height == 768;
+            lbl1024x768.Enabled = !lbl800x600.Enabled;
+            lbl800x600.Cursor = lbl800x600.Enabled ? Cursors.Hand : Cursors.Default;
+            lbl1024x768.Cursor = lbl1024x768.Enabled ? Cursors.Hand : Cursors.Default;
+
+            CheckOk();
+        }
+
+        private void lblEasy_Click(object sender, EventArgs e)
+        {
+            SetDifficulty(DifficultyLevel.Easy);
+        }
+
+        private void lblMedium_Click(object sender, EventArgs e)
+        {
+            SetDifficulty(DifficultyLevel.Medium);
+        }
+
+        private void lblHard_Click(object sender, EventArgs e)
+        {
+            SetDifficulty(DifficultyLevel.Hard);
+        }
+
+        private void CheckOk()
         {
             var resolution = $"{settings.Width}x{settings.Height}";
             var difficulty = settings.Difficulty;
 
-            var selectedResolution = lbl800x600.Enabled ? lbl800x600.Text : lbl1024x768.Text;
-            var selectedDifficulty = lblEasy.Enabled ? lblEasy.Text.ToUpper() : lblMedium.Text.ToUpper();
+            var selectedResolution = lbl1024x768.Enabled ? lbl800x600.Text : lbl1024x768.Text;
+            string selectedDifficulty;
 
-            lblOK.Enabled = !(selectedResolution.Equals(resolution) && selectedDifficulty.Equals(difficulty));
-        }
-
-        private void UpdateResolutionLabel(object sender, EventArgs e)
-        {
-            var label = (Label)sender;
-
-            if (label.Enabled)
+            if (lblEasy.Enabled)
             {
-                lbl800x600.Enabled = !lbl800x600.Enabled;
-                lbl1024x768.Enabled = !lbl800x600.Enabled;
-
-                UpdateOkButtonState();
+                selectedDifficulty = lblMedium.Enabled ? lblHard.Text.ToUpper() : lblMedium.Text.ToUpper();
             }
-        }
-
-        private void UpdateDifficultyLabel(object sender, EventArgs e)
-        {
-            var label = (Label)sender;
-
-            if (label.Enabled)
+            else
             {
-                lblEasy.Enabled = label == lblEasy ? false : true;
-                lblMedium.Enabled = label == lblMedium ? false : true;
-                lblHard.Enabled = label == lblHard ? false : true;
-
-                UpdateOkButtonState();
+                selectedDifficulty = lblEasy.Text.ToUpper();
             }
+
+            lblOK.Enabled = !selectedResolution.Equals(resolution) || !selectedDifficulty.Equals(difficulty);
         }
     }
 }
