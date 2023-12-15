@@ -11,15 +11,15 @@ namespace Fruit_Ninja
     {
         public Main MainForm { get; }
 
-        public static Random r = new Random();
+        public static Random R = new Random();
 
-        public Image background;
+        public Image Background;
 
-        public List<Element> elements = new List<Element>();
+        public List<Element> Elements = new List<Element>();
 
-        public Score currentScore = new Score(0, new DateTime(), "");
-        public int time = 25;
-        public int bombsClicked = 0;
+        public Score CurrentScore = new Score(0, new DateTime(), "");
+        public int Time = 25;
+        public int BombsClicked = 0;
 
         private static readonly Image[] BackgroundResources =
         {
@@ -36,13 +36,13 @@ namespace Fruit_Ninja
 
         private void InitializeBackground()
         {
-            var randomIndex = r.Next(BackgroundResources.Length);
-            background = BackgroundResources[randomIndex];
+            var randomIndex = R.Next(BackgroundResources.Length);
+            Background = BackgroundResources[randomIndex];
         }
 
         public void Draw(PaintEventArgs e)
         {
-            foreach (var el in elements)
+            foreach (var el in Elements)
             {
                 el.Draw(e);
             }
@@ -50,38 +50,41 @@ namespace Fruit_Ninja
 
         public void Move()
         {
-            foreach (var el in elements)
+            foreach (var el in Elements)
             {
                 el.Move();
             }
 
-            for (var i = elements.Count - 1; i >= 0; i--)
+            for (var i = Elements.Count - 1; i >= 0; i--)
             {
-                if (elements[i].type.Equals("-10Bomb")
-                    || elements[i].type.Equals("GameOverBomb")
-                    || elements[i].ulCorner.Y < SettingsForm.settings.Height)
+                if (Elements[i].type.Equals("-10Bomb")
+                    || Elements[i].type.Equals("GameOverBomb")
+                    || Elements[i].ulCorner.Y < SettingsForm.settings.Height)
                 {
                     continue;
                 }
 
-                currentScore.points -= 2;
-                elements.Remove(elements[i]);
+                CurrentScore.points -= 2;
+                Elements.Remove(Elements[i]);
             }
         }
 
         public void DrawCurve(List<Point> points)
         {
-            using (var g = MainForm.panelGame.CreateGraphics())
+            MainForm.panelGame.Invoke((MethodInvoker)delegate
             {
-                if (points.Count >= 2)
+                using (var g = MainForm.panelGame.CreateGraphics())
                 {
-                    g.DrawCurve(Pens.GreenYellow, points.ToArray());
+                    if (points.Count >= 2)
+                    {
+                        g.DrawCurve(Pens.GreenYellow, points.ToArray());
+                    }
                 }
-            }
+            });
         }
 
-        public bool CheckSlice(List<Point> points)
-        {
+        public bool IsCut(List<Point> points)
+        { 
             var elementHandlers = new Dictionary<string, Action>
             {
                 { "-10Bomb", () => ProcessBombClick(-10) },
@@ -91,12 +94,12 @@ namespace Fruit_Ninja
                 { "Watermelon", () => ProcessFruitClick(5) }
             };
 
-            foreach (var el in elements.Where(el => el.IntersectsCurve(points)))
+            foreach (var el in Elements.Where(el => el.IntersectsCurve(points)))
             {
                 if (elementHandlers.TryGetValue(el.type, out var handler))
                 {
                     handler.Invoke();
-                    elements.Remove(el);
+                    Elements.Remove(el);
                     break;
                 }
 
@@ -111,15 +114,15 @@ namespace Fruit_Ninja
 
         private void ProcessBombClick(int penalty)
         {
-            if (bombsClicked >= 3) return;
+            if (BombsClicked >= 3) return;
 
-            currentScore.SettleScore(penalty);
-            bombsClicked++;
+            CurrentScore.SettleScore(penalty);
+            BombsClicked++;
         }
 
         private void ProcessFruitClick(int score)
         {
-            currentScore.SettleScore(score);
+            CurrentScore.SettleScore(score);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Fruit_Ninja
 {
@@ -58,7 +59,7 @@ namespace Fruit_Ninja
         private void PanelGame_Paint(object sender, PaintEventArgs e)
         {
             game.Draw(e);
-            lblTime.Text = $@"00:{game.time:00}";
+            lblTime.Text = $@"00:{game.Time:00}";
         }
 
         // TODO: Users Stats
@@ -143,16 +144,24 @@ namespace Fruit_Ninja
         {
             if (!_isSlicing) return;
 
+            if (_slicePoints.Count == 100)
+            {
+                _slicePoints.Clear();
+                return;
+            }
+
             _endSlicePoint = PointToClient(Cursor.Position);
             _slicePoints.Add(_endSlicePoint);
-            game.DrawCurve(_slicePoints);
+
+            Task.Factory.StartNew(() => game.DrawCurve(_slicePoints));
+            // game.DrawCurve(_slicePoints);
         }
 
         private void PanelGame_MouseUp(object sender, MouseEventArgs e)
         {
             _isSlicing = false;
 
-            if (game.CheckSlice(_slicePoints))
+            if (game.IsCut(_slicePoints))
             {
                 StopGame();
             }
@@ -187,7 +196,7 @@ namespace Fruit_Ninja
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            lblScore.Text = game.currentScore.points.ToString();
+            lblScore.Text = game.CurrentScore.points.ToString();
 
             if (lblScore.Right > Width)
                 lblScore.Left = Width - lblScore.Width - 20;
@@ -202,7 +211,7 @@ namespace Fruit_Ninja
             }
 
             if (ticks++ % speed == 0)
-                game.elements.Add(new Element());
+                game.Elements.Add(new Element());
 
             game.Move();
 
@@ -211,9 +220,9 @@ namespace Fruit_Ninja
 
         private void ViewTimer_Tick(object sender, EventArgs e)
         {
-            lblTime.Text = $@"00:{--game.time:00}";
+            lblTime.Text = $@"00:{--game.Time:00}";
 
-            if (game.time == 0)
+            if (game.Time == 0)
                 StopGame();
         }
 
@@ -230,7 +239,7 @@ namespace Fruit_Ninja
             game = new Game(this);
 
             if (ActiveForm != null)
-                ActiveForm.BackgroundImage = game.background;
+                ActiveForm.BackgroundImage = game.Background;
 
             SetGameTimeInterval();
 
@@ -258,7 +267,7 @@ namespace Fruit_Ninja
             currentUser.AddScore(currentScore);
 
             const string title = "Time Up :(";
-            var text = $"No more time {currentUser.Name}. You have scored {game.currentScore.points} points! Play again?";
+            var text = $"No more time {currentUser.Name}. You have scored {game.CurrentScore.points} points! Play again?";
 
             var dr = MessageBox.Show(text, title, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
