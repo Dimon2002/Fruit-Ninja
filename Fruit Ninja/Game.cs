@@ -82,17 +82,19 @@ namespace Fruit_Ninja
 
         public void DrawCurve(List<Point> points, int seed)
         {
-            if (points.Count < 2) return;
+            var pointsCopy = points.ToList();
+
+            if (pointsCopy.Count < 2) return;
             
             MainForm.panelGame.Invoke((MethodInvoker)delegate
             {
                 using (var g = MainForm.panelGame.CreateGraphics())
                 {
-                    using (var brush = new LinearGradientBrush(points.First(), points.Last(), GetColor(seed), GetColor(seed/2)))
+                    using (var brush = new LinearGradientBrush(pointsCopy.First(), pointsCopy.Last(), GetColor(seed), GetColor(seed/2)))
                     {
                         using (var pen = new Pen(brush, PenWidth))
                         {
-                            g.DrawCurve(pen, points.ToArray());
+                            g.DrawCurve(pen, pointsCopy.ToArray());
                         }
                     }
                 }

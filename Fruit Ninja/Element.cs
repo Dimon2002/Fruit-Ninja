@@ -11,10 +11,11 @@ namespace Fruit_Ninja
         public static Random r = new Random();
 
         public Image image;
-
-        public Point ulCorner;
-        public Point urCorner;
-        public Point llCorner;
+        
+        // Эти точки определяют, где будет нарисован элемент на игровом поле.
+        public Point ulCorner; // up left
+        public Point urCorner; // up right
+        public Point llCorner; // lower left
 
         public int directionX;
         public int directionY;
@@ -24,7 +25,7 @@ namespace Fruit_Ninja
 
         public Element()
         {
-            Generate();
+            Initialization();
         }
 
         public void Draw(PaintEventArgs e)
@@ -69,75 +70,74 @@ namespace Fruit_Ninja
 
         private bool IsPointInsideElement(Point point)
         {
-            return point.X >= ulCorner.X 
+            return point.X >= ulCorner.X
                    && point.X <= urCorner.X
                    && point.Y >= ulCorner.Y
                    && point.Y <= llCorner.Y;
         }
-        
-        public void Generate()
+
+        public void Initialization()
         {
             var difficulty = SettingsForm.Settings.Difficulty;
-            var availableElements = 0;
+            var availableElements = GetAvailableElements(difficulty);
 
+            SetElementAttributes(availableElements);
+            SetElementPosition();
+        }
+
+        private static int GetAvailableElements(string difficulty)
+        {
             switch (difficulty.ToUpper())
             {
                 case "EASY":
-                    availableElements = 4;
-                    break;
+                    return 4;
                 case "MEDIUM":
-                    availableElements = 5;
-                    break;
+                    return 5;
                 case "HARD":
-                    availableElements = 6;
-                    break;
+                    return 6;
+                default:
+                    return 0;
             }
+        }
 
-            switch (r.Next(availableElements))
+        private void SetElementAttributes(int availableElements)
+        {
+            var elementIndex = r.Next(availableElements);
+
+            switch (elementIndex)
             {
                 case 0:
-                    {
-                        image = Properties.Resources.Banana;
-                        type = "Banana";
-                        break;
-                    }
+                    SetElementProperties(Properties.Resources.Banana, "Banana");
+                    break;
                 case 1:
-                    {
-                        image = Properties.Resources.Green_Apple;
-                        type = "Apple";
-                        break;
-                    }
+                    SetElementProperties(Properties.Resources.Green_Apple, "Apple");
+                    break;
                 case 2:
-                    {
-                        image = Properties.Resources.Pineapple;
-                        type = "Pineapple";
-                        break;
-                    }
+                    SetElementProperties(Properties.Resources.Pineapple, "Pineapple");
+                    break;
                 case 3:
-                    {
-                        image = Properties.Resources.Watermelon;
-                        type = "Watermelon";
-                        break;
-                    }
+                    SetElementProperties(Properties.Resources.Watermelon, "Watermelon");
+                    break;
                 case 4:
-                    {
-                        image = Properties.Resources._10_Bomb;
-                        type = "-10Bomb";
-                        break;
-                    }
+                    SetElementProperties(Properties.Resources._10_Bomb, "-10Bomb");
+                    break;
                 case 5:
-                    {
-                        image = Properties.Resources.bombGameOver;
-                        type = "GameOverBomb";
-                        break;
-                    }
+                    SetElementProperties(Properties.Resources.bombGameOver, "GameOverBomb");
+                    break;
                 default:
-                    {
-                        type = "";
-                        break;
-                    }
+                    type = "";
+                    break;
             }
+        }
+        
+        private void SetElementProperties(Image elementImage, string elementType)
+        {
+            image = elementImage;
+            type = elementType;
+        }
 
+        private void SetElementPosition()
+        {
             var positions = (SettingsForm.Settings.Width - 20) / image.Width;
             var currentPosition = r.Next(positions);
 
@@ -145,29 +145,20 @@ namespace Fruit_Ninja
             urCorner = new Point((currentPosition + 1) * image.Width, SettingsForm.Settings.Height - image.Height / 2);
             llCorner = new Point(currentPosition * image.Width + 10, SettingsForm.Settings.Height + image.Height / 2);
 
-            directionX = 0;
+            directionX = GetElementDirectionX(currentPosition, positions);
             directionY = -10;
+        }
 
-            if (currentPosition == 0)
+        private static int GetElementDirectionX(int currentPosition, int positions)
+        {
+            if (currentPosition == 0 || currentPosition == positions - 1)
             {
-                directionX = 10;
+                return currentPosition == 0 ? 10 : -10;
             }
-            else if (currentPosition < positions / 2)
-            {
-                var d = r.Next(2);
 
-                directionX = d == 0 ? 10 : -10;
-            }
-            else if (currentPosition == positions - 1)
-            {
-                directionX = -10;
-            }
-            else
-            {
-                var d = r.Next(2);
+            var d = r.Next(2);
 
-                directionX = d == 0 ? 10 : -10;
-            }
+            return d == 0 ? 10 : -10;
         }
     }
 }
