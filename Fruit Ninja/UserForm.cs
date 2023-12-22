@@ -27,6 +27,11 @@ namespace Fruit_Ninja
             FillUsers();
         }
 
+        private void UserForm_Closing(object sender, FormClosingEventArgs e)
+        {
+            OnChildFormClosed();
+        }
+
         private void Back_Click(object sender, EventArgs e)
         {
             OnChildFormClosed();

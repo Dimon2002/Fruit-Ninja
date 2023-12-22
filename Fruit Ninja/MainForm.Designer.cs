@@ -93,8 +93,7 @@ namespace Fruit_Ninja
             // 
             // Highscores
             // 
-            // TODO: Доделать коректную работу с файлом
-            /*this.pbHighscores.BackColor = System.Drawing.Color.Transparent;
+            this.pbHighscores.BackColor = System.Drawing.Color.Transparent;
             this.pbHighscores.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbHighscores.Image = global::Fruit_Ninja.Properties.Resources.trophy;
             this.pbHighscores.Location = new System.Drawing.Point(3, 3);
@@ -102,7 +101,7 @@ namespace Fruit_Ninja
             this.pbHighscores.Size = new System.Drawing.Size(102, 102);
             this.pbHighscores.TabIndex = 4;
             this.pbHighscores.TabStop = false;
-            this.pbHighscores.Click += new System.EventHandler(this.Highscores_Click);*/
+            this.pbHighscores.Click += new System.EventHandler(this.Highscores_Click);
             // 
             // pbUser
             // 

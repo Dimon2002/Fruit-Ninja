@@ -22,15 +22,15 @@ namespace Fruit_Ninja
         public int BombsClicked = 0;
 
         private const int PenWidth = 5;
-        
+
         private static readonly Image[] BackgroundResources =
         {
             Properties.Resources.background1,
             Properties.Resources.background2,
             Properties.Resources.background3
         };
-        
-        private static readonly Color[] Colors = 
+
+        private static readonly Color[] Colors =
         {
             (Color.CadetBlue),
             (Color.Aqua),
@@ -70,7 +70,7 @@ namespace Fruit_Ninja
             {
                 if (Elements[i].type.Equals("-10Bomb")
                     || Elements[i].type.Equals("GameOverBomb")
-                    || Elements[i].ulCorner.Y < SettingsForm.Settings.Height)
+                    || Elements[i].UpLeftPoint.Y < SettingsForm.Settings.Height)
                 {
                     continue;
                 }
@@ -85,12 +85,14 @@ namespace Fruit_Ninja
             var pointsCopy = points.ToList();
 
             if (pointsCopy.Count < 2) return;
-            
-            MainForm.panelGame.Invoke((MethodInvoker)delegate
+
+            MainForm.panelGame.Invoke(
+            (MethodInvoker)delegate
             {
                 using (var g = MainForm.panelGame.CreateGraphics())
                 {
-                    using (var brush = new LinearGradientBrush(pointsCopy.First(), pointsCopy.Last(), GetColor(seed), GetColor(seed/2)))
+                    using (var brush = new LinearGradientBrush(pointsCopy.First(), pointsCopy.Last(), GetColor(seed),
+                               GetColor(seed / 2)))
                     {
                         using (var pen = new Pen(brush, PenWidth))
                         {
@@ -107,7 +109,7 @@ namespace Fruit_Ninja
         }
 
         public bool IsGameActive(List<Point> points)
-        { 
+        {
             var elementHandlers = new Dictionary<string, Action>
             {
                 { "-10Bomb", () => ProcessBombClick(-10) },

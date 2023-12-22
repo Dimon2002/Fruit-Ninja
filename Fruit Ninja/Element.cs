@@ -8,17 +8,16 @@ namespace Fruit_Ninja
 {
     public class Element
     {
-        public static Random r = new Random();
+        private static Random r = new Random();
 
-        public Image image;
+        public Image Image { get; private set;}
         
-        // Эти точки определяют, где будет нарисован элемент на игровом поле.
-        public Point ulCorner; // up left
-        public Point urCorner; // up right
-        public Point llCorner; // lower left
-
-        public int directionX;
-        public int directionY;
+        public Point UpLeftPoint { get; private set; }
+        public Point UpRightPoint { get; private set;}
+        public Point LeftLowPoint { get; private set; }
+        
+        private int _directionX;
+        private int _directionY;
 
         public bool enabled = true;
         public string type;
@@ -30,13 +29,13 @@ namespace Fruit_Ninja
 
         public void Draw(PaintEventArgs e)
         {
-            var newImage = image;
+            var newImage = Image;
 
             Point[] destPara =
             {
-                ulCorner,
-                urCorner,
-                llCorner
+                UpLeftPoint,
+                UpRightPoint,
+                LeftLowPoint
             };
             e.Graphics.DrawImage(newImage, destPara);
         }
@@ -45,22 +44,22 @@ namespace Fruit_Ninja
         {
             if (enabled)
             {
-                if (ulCorner.Y <= 0 || urCorner.Y <= 0)
+                if (UpLeftPoint.Y <= 0 || UpRightPoint.Y <= 0)
                 {
-                    directionY = 10;
-                    directionX = 0;
+                    _directionY = 10;
+                    _directionX = 0;
                     enabled = false;
                 }
-                else if (ulCorner.X <= 0 || urCorner.X >= SettingsForm.Settings.Width)
+                else if (UpLeftPoint.X <= 0 || UpRightPoint.X >= SettingsForm.Settings.Width)
                 {
-                    directionY = -10;
-                    directionX = -directionX;
+                    _directionY = -10;
+                    _directionX = -_directionX;
                 }
             }
 
-            ulCorner = new Point(ulCorner.X + directionX, ulCorner.Y + directionY);
-            urCorner = new Point(urCorner.X + directionX, urCorner.Y + directionY);
-            llCorner = new Point(llCorner.X + directionX, llCorner.Y + directionY);
+            UpLeftPoint = new Point(UpLeftPoint.X + _directionX, UpLeftPoint.Y + _directionY);
+            UpRightPoint = new Point(UpRightPoint.X + _directionX, UpRightPoint.Y + _directionY);
+            LeftLowPoint = new Point(LeftLowPoint.X + _directionX, LeftLowPoint.Y + _directionY);
         }
 
         public bool IntersectsCurve(List<Point> points)
@@ -70,10 +69,10 @@ namespace Fruit_Ninja
 
         private bool IsPointInsideElement(Point point)
         {
-            return point.X >= ulCorner.X
-                   && point.X <= urCorner.X
-                   && point.Y >= ulCorner.Y
-                   && point.Y <= llCorner.Y;
+            return point.X >= UpLeftPoint.X
+                   && point.X <= UpRightPoint.X
+                   && point.Y >= UpLeftPoint.Y
+                   && point.Y <= LeftLowPoint.Y;
         }
 
         public void Initialization()
@@ -132,21 +131,21 @@ namespace Fruit_Ninja
         
         private void SetElementProperties(Image elementImage, string elementType)
         {
-            image = elementImage;
+            Image = elementImage;
             type = elementType;
         }
 
         private void SetElementPosition()
         {
-            var positions = (SettingsForm.Settings.Width - 20) / image.Width;
+            var positions = (SettingsForm.Settings.Width - 20) / Image.Width;
             var currentPosition = r.Next(positions);
 
-            ulCorner = new Point(currentPosition * image.Width + 10, SettingsForm.Settings.Height - image.Height / 2);
-            urCorner = new Point((currentPosition + 1) * image.Width, SettingsForm.Settings.Height - image.Height / 2);
-            llCorner = new Point(currentPosition * image.Width + 10, SettingsForm.Settings.Height + image.Height / 2);
+            UpLeftPoint = new Point(currentPosition * Image.Width + 10, SettingsForm.Settings.Height - Image.Height / 2);
+            UpRightPoint = new Point((currentPosition + 1) * Image.Width, SettingsForm.Settings.Height - Image.Height / 2);
+            LeftLowPoint = new Point(currentPosition * Image.Width + 10, SettingsForm.Settings.Height + Image.Height / 2);
 
-            directionX = GetElementDirectionX(currentPosition, positions);
-            directionY = -10;
+            _directionX = GetElementDirectionX(currentPosition, positions);
+            _directionY = -10;
         }
 
         private static int GetElementDirectionX(int currentPosition, int positions)

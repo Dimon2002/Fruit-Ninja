@@ -46,16 +46,14 @@ namespace Fruit_Ninja
             panelGame, new object[] { true });
         }
 
-        // TODO: Users upload score from file stats
         private void Main_Load(object sender, EventArgs e)
         {
-            // LoadFromFile();
+            LoadFromFile();
         }
 
-        // TODO: Users score save to file stats
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // SaveToFile();
+            SaveToFile();
         }
 
         private void PanelGame_Paint(object sender, PaintEventArgs e)
@@ -64,10 +62,9 @@ namespace Fruit_Ninja
             lblTime.Text = $@"00:{Game.Time:00}";
         }
 
-        // TODO: Users Stats
         private void Highscores_Click(object sender, EventArgs e)
         {
-            // new HighScoresForm().Show();
+            new HighScoresForm().Show();
         }
 
         private void User_Click(object sender, EventArgs e)
@@ -109,15 +106,15 @@ namespace Fruit_Ninja
 
             if (ActiveForm.Width == 800)
             {
-                ActiveForm.Width += 224;
-                ActiveForm.Height += 168;
+                ActiveForm.Width = 1920;
+                ActiveForm.Height = 1080;
                 resize = false;
                 CenterFormToScreen();
-            }
+            } 
             else
             {
-                ActiveForm.Width -= 224;
-                ActiveForm.Height -= 168;
+                Width = 800;
+                ActiveForm.Height = 600;
                 resize = true;
                 CenterFormToScreen();
             }
@@ -145,7 +142,7 @@ namespace Fruit_Ninja
         {
             if (!_isSlicing) return;
 
-            if (_slicePoints.Count == 100)
+            if (_slicePoints.Count >= 50)
             {
                 _slicePoints.Clear();
                 return;
@@ -312,7 +309,6 @@ namespace Fruit_Ninja
             }
         }
 
-        // TODO: Save scores to file
         public void SaveToFile()
         {
             var bf = new BinaryFormatter();
@@ -323,7 +319,6 @@ namespace Fruit_Ninja
 
         } // try catch
 
-        // TODO: Load scores from file
         public void LoadFromFile()
         {
             var bf = new BinaryFormatter();
