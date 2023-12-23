@@ -8,8 +8,8 @@ namespace Fruit_Ninja
 {
     public class Element
     {
-        private static Random r = new Random();
-
+        private static readonly Random R = new Random();
+        
         public Image Image { get; private set;}
         
         public Point UpLeftPoint { get; private set; }
@@ -101,7 +101,7 @@ namespace Fruit_Ninja
 
         private void SetElementAttributes(int availableElements)
         {
-            var elementIndex = r.Next(availableElements);
+            var elementIndex = R.Next(availableElements);
 
             switch (elementIndex)
             {
@@ -138,7 +138,7 @@ namespace Fruit_Ninja
         private void SetElementPosition()
         {
             var positions = (SettingsForm.Settings.Width - 20) / Image.Width;
-            var currentPosition = r.Next(positions);
+            var currentPosition = R.Next(positions);
 
             UpLeftPoint = new Point(currentPosition * Image.Width + 10, SettingsForm.Settings.Height - Image.Height / 2);
             UpRightPoint = new Point((currentPosition + 1) * Image.Width, SettingsForm.Settings.Height - Image.Height / 2);
@@ -155,7 +155,7 @@ namespace Fruit_Ninja
                 return currentPosition == 0 ? 10 : -10;
             }
 
-            var d = r.Next(2);
+            var d = R.Next(2);
 
             return d == 0 ? 10 : -10;
         }

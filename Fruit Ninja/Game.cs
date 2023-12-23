@@ -82,7 +82,7 @@ namespace Fruit_Ninja
 
         public void DrawCurve(List<Point> points, int seed)
         {
-            var pointsCopy = points.ToList();
+            var pointsCopy = new List<Point>(points);
 
             if (pointsCopy.Count < 2) return;
 

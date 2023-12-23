@@ -12,34 +12,35 @@ namespace Fruit_Ninja
 {
     public partial class Main : Form
     {
-        internal static Dictionary<string, User> Users = new Dictionary<string, User>()
-        {
-            { "Guest", new User() {Name = "Guest"} }
-        };
+        private Game _game;
 
-        internal static User CurrentUser = new User() { Name = "Guest" };
-        internal static List<Score> TopScores = new List<Score>();
-
-        internal static bool resize = false;
-
-        internal Game Game;
-        internal bool CanClick = false;
-        internal int Ticks = 0;
-        internal string SaveFile = Environment.CurrentDirectory + "\\save.txt";
-
-        private readonly List<Point> _slicePoints = new List<Point>();
-        private Point _endSlicePoint;
         private bool _isSlicing;
 
+        private int _ticks;
         private int _r;
+        
+        private readonly string _saveFile = Environment.CurrentDirectory + "\\save.txt";
+        private readonly List<Point> _slicePoints = new List<Point>();
+
+        public static bool IsWindowResize;
+
+        public static User CurrentUser = new User()
+        {
+            Name = "Guest"
+        };
+
+        public static Dictionary<string, User> Users = new Dictionary<string, User>()
+        {
+            { "Guest", CurrentUser }
+        };
+
+        public static List<Score> TopScores = new List<Score>();
 
         public Main()
         {
             InitializeComponent();
 
             SettingsForm.Settings = new Settings(800, 600, "EASY");
-
-            // LoadFromFile();
 
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
             | BindingFlags.Instance | BindingFlags.NonPublic, null,
@@ -58,22 +59,22 @@ namespace Fruit_Ninja
 
         private void PanelGame_Paint(object sender, PaintEventArgs e)
         {
-            Game.Draw(e);
-            lblTime.Text = $@"00:{Game.Time:00}";
+            _game.Draw(e);
+            lblTime.Text = $@"00:{_game.Time:00}";
         }
-
-        private void Highscores_Click(object sender, EventArgs e)
+         
+        private void TopScores_Click(object sender, EventArgs e)
         {
             new HighScoresForm().Show();
         }
-
+        
         private void User_Click(object sender, EventArgs e)
         {
             var userForm = new UserForm();
             userForm.ChildFormClosed += UserForm_ChildFormClosed;
             userForm.Show();
         }
-
+        
         private void Play_Click(object sender, EventArgs e)
         {
             NewGame();
@@ -96,26 +97,26 @@ namespace Fruit_Ninja
                 ActiveForm.BackgroundImage = Properties.Resources._2013_08_28_105146;
         }
 
-        private void pbSettings_Click(object sender, EventArgs e)
+        private void Settings_Click(object sender, EventArgs e)
         {
             var settings = new SettingsForm();
 
             if (settings.ShowDialog() != DialogResult.OK) return;
+            
+            if (!IsWindowResize) return;
 
-            if (!resize) return;
-
-            if (ActiveForm.Width == 800)
+            if (Width == 800)
             {
-                ActiveForm.Width = 1920;
-                ActiveForm.Height = 1080;
-                resize = false;
+                Width = 1024;
+                Height = 768;
+                IsWindowResize = false;
                 CenterFormToScreen();
             } 
             else
             {
                 Width = 800;
-                ActiveForm.Height = 600;
-                resize = true;
+                Height = 600;
+                IsWindowResize = true;
                 CenterFormToScreen();
             }
         }
@@ -148,20 +149,19 @@ namespace Fruit_Ninja
                 return;
             }
 
-            _endSlicePoint = PointToClient(Cursor.Position);
-            _slicePoints.Add(_endSlicePoint);
+            _slicePoints.Add(PointToClient(Cursor.Position));
 
-            Task.Factory.StartNew(() => Game.DrawCurve(_slicePoints,  _r));
+            Task.Factory.StartNew(() => _game.DrawCurve(_slicePoints,  _r));
+
+            if (!_game.IsGameActive(_slicePoints))
+            {
+                StopGame();
+            }
         }
 
         private void PanelGame_MouseUp(object sender, MouseEventArgs e)
         {
             _isSlicing = false;
-
-            if (!Game.IsGameActive(_slicePoints))
-            {
-                StopGame();
-            }
 
             _r = new Random().Next();
 
@@ -175,7 +175,6 @@ namespace Fruit_Ninja
             pbUnpause.Visible = false;
 
             pbPause.Visible = true;
-            CanClick = true;
 
             gameTimer.Start();
             timeTimer.Start();
@@ -186,7 +185,6 @@ namespace Fruit_Ninja
             pbUnpause.Visible = true;
             pbQuit.Visible = true;
 
-            CanClick = false;
             pbPause.Visible = false;
 
             gameTimer.Stop();
@@ -195,7 +193,7 @@ namespace Fruit_Ninja
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            lblScore.Text = Game.CurrentScore.Points.ToString();
+            lblScore.Text = _game.CurrentScore.Points.ToString();
 
             if (lblScore.Right > Width)
                 lblScore.Left = Width - lblScore.Width - 20;
@@ -209,19 +207,19 @@ namespace Fruit_Ninja
                 case "HARD": speed = 20; break;
             }
 
-            if (Ticks++ % speed == 0)
-                Game.Elements.Add(new Element());
+            if (_ticks++ % speed == 0)
+                _game.Elements.Add(new Element());
 
-            Game.Move();
+            _game.Move();
 
             Invalidate(true);
         }
 
         private void ViewTimer_Tick(object sender, EventArgs e)
         {
-            lblTime.Text = $@"00:{--Game.Time:00}";
+            lblTime.Text = $@"00:{--_game.Time:00}";
 
-            if (Game.Time == 0)
+            if (_game.Time == 0)
                 StopGame();
         }
 
@@ -235,10 +233,10 @@ namespace Fruit_Ninja
 
             lblScore.Text = @"0";
 
-            Game = new Game(this);
+            _game = new Game(this);
 
             if (ActiveForm != null)
-                ActiveForm.BackgroundImage = Game.Background;
+                ActiveForm.BackgroundImage = _game.Background;
 
             SetGameTimeInterval();
 
@@ -266,7 +264,7 @@ namespace Fruit_Ninja
             CurrentUser.AddScore(currentScore);
 
             const string title = "Time Up :(";
-            var text = $"No more time {CurrentUser.Name}. You have scored {Game.CurrentScore.Points} points! Play again?";
+            var text = $"No more time {CurrentUser.Name}. You have scored {_game.CurrentScore.Points} points! Play again?";
 
             var dr = MessageBox.Show(text, title, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
@@ -312,7 +310,7 @@ namespace Fruit_Ninja
         public void SaveToFile()
         {
             var bf = new BinaryFormatter();
-            var fs = new FileStream(SaveFile, FileMode.Create, FileAccess.Write);
+            var fs = new FileStream(_saveFile, FileMode.Create, FileAccess.Write);
 
             bf.Serialize(fs, Users.Values.ToArray());
             fs.Close();
@@ -322,7 +320,7 @@ namespace Fruit_Ninja
         public void LoadFromFile()
         {
             var bf = new BinaryFormatter();
-            var fs = new FileStream(SaveFile, FileMode.Open, FileAccess.Read);
+            var fs = new FileStream(_saveFile, FileMode.Open, FileAccess.Read);
             var userList = (User[])bf.Deserialize(fs);
 
             fs.Close();

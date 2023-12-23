@@ -64,7 +64,7 @@
             this.lbl800x600.Size = new System.Drawing.Size(108, 22);
             this.lbl800x600.TabIndex = 1;
             this.lbl800x600.Text = "800x600";
-            this.lbl800x600.Click += new System.EventHandler(this.lbl800x600_Click);
+            this.lbl800x600.Click += new System.EventHandler(this.Label800x600_Click);
             // 
             // lbl1024x768
             // 
@@ -77,7 +77,7 @@
             this.lbl1024x768.Size = new System.Drawing.Size(121, 22);
             this.lbl1024x768.TabIndex = 2;
             this.lbl1024x768.Text = "1024x768";
-            this.lbl1024x768.Click += new System.EventHandler(this.lbl1024x768_Click);
+            this.lbl1024x768.Click += new System.EventHandler(this.Label1024x768_Click);
             // 
             // lblDifficulty
             // 
@@ -103,7 +103,7 @@
             this.lblEasy.Size = new System.Drawing.Size(81, 22);
             this.lblEasy.TabIndex = 4;
             this.lblEasy.Text = "Easy";
-            this.lblEasy.Click += new System.EventHandler(this.lblEasy_Click);
+            this.lblEasy.Click += new System.EventHandler(this.EasyClick);
             // 
             // lblMedium
             // 
@@ -116,7 +116,7 @@
             this.lblMedium.Size = new System.Drawing.Size(122, 22);
             this.lblMedium.TabIndex = 5;
             this.lblMedium.Text = "Medium";
-            this.lblMedium.Click += new System.EventHandler(this.lblMedium_Click);
+            this.lblMedium.Click += new System.EventHandler(this.Medium_Click);
             // 
             // lblHard
             // 
@@ -129,7 +129,7 @@
             this.lblHard.Size = new System.Drawing.Size(88, 22);
             this.lblHard.TabIndex = 6;
             this.lblHard.Text = "Hard";
-            this.lblHard.Click += new System.EventHandler(this.lblHard_Click);
+            this.lblHard.Click += new System.EventHandler(this.Hard_Click);
             // 
             // lblOK
             // 
@@ -143,7 +143,7 @@
             this.lblOK.Size = new System.Drawing.Size(49, 22);
             this.lblOK.TabIndex = 7;
             this.lblOK.Text = "OK";
-            this.lblOK.Click += new System.EventHandler(this.lblOK_Click);
+            this.lblOK.Click += new System.EventHandler(this.OK_Click);
             // 
             // lblExit
             // 
@@ -156,7 +156,7 @@
             this.lblExit.Size = new System.Drawing.Size(76, 22);
             this.lblExit.TabIndex = 8;
             this.lblExit.Text = "Exit";
-            this.lblExit.Click += new System.EventHandler(this.lblExit_Click);
+            this.lblExit.Click += new System.EventHandler(this.Exit_Click);
             // 
             // SettingsForm
             // 

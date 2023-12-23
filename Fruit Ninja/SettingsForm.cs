@@ -24,7 +24,7 @@ namespace Fruit_Ninja
             UpdateFields();
         }
 
-        private void lblOK_Click(object sender, EventArgs e)
+        private void OK_Click(object sender, EventArgs e)
         {
             int width, height;
             var difficulty = "";
@@ -55,7 +55,7 @@ namespace Fruit_Ninja
 
             if (dr == DialogResult.Yes)
             {
-                Main.resize = Settings.Height != newSettings.Height;
+                Main.IsWindowResize = Settings.Height != newSettings.Height;
 
                 Settings = newSettings;
                 DialogResult = DialogResult.OK;
@@ -68,11 +68,11 @@ namespace Fruit_Ninja
             Close();
         }
 
-        private void lblExit_Click(object sender, EventArgs e)
+        private void Exit_Click(object sender, EventArgs e)
         {
             Close();
         }
-
+         
         private void UpdateFields()
         {
             lbl800x600.Enabled = Settings.Width == 1024;
@@ -127,12 +127,12 @@ namespace Fruit_Ninja
             CheckOk();
         }
 
-        private void lbl1024x768_Click(object sender, EventArgs e)
+        private void Label1024x768_Click(object sender, EventArgs e)
         {
             SetResolution(1024, 768);
         }
 
-        private void lbl800x600_Click(object sender, EventArgs e)
+        private void Label800x600_Click(object sender, EventArgs e)
         {
             SetResolution(800, 600);
         }
@@ -147,17 +147,17 @@ namespace Fruit_Ninja
             CheckOk();
         }
 
-        private void lblEasy_Click(object sender, EventArgs e)
+        private void EasyClick(object sender, EventArgs e)
         {
             SetDifficulty(DifficultyLevel.Easy);
         }
 
-        private void lblMedium_Click(object sender, EventArgs e)
+        private void Medium_Click(object sender, EventArgs e)
         {
             SetDifficulty(DifficultyLevel.Medium);
         }
 
-        private void lblHard_Click(object sender, EventArgs e)
+        private void Hard_Click(object sender, EventArgs e)
         {
             SetDifficulty(DifficultyLevel.Hard);
         }

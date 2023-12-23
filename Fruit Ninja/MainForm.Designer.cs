@@ -101,7 +101,7 @@ namespace Fruit_Ninja
             this.pbHighscores.Size = new System.Drawing.Size(102, 102);
             this.pbHighscores.TabIndex = 4;
             this.pbHighscores.TabStop = false;
-            this.pbHighscores.Click += new System.EventHandler(this.Highscores_Click);
+            this.pbHighscores.Click += new System.EventHandler(this.TopScores_Click);
             // 
             // pbUser
             // 
@@ -141,7 +141,7 @@ namespace Fruit_Ninja
             this.pbSettings.Size = new System.Drawing.Size(107, 105);
             this.pbSettings.TabIndex = 6;
             this.pbSettings.TabStop = false;
-            this.pbSettings.Click += new System.EventHandler(this.pbSettings_Click);
+            this.pbSettings.Click += new System.EventHandler(this.Settings_Click);
             // 
             // pbPlay
             // 
