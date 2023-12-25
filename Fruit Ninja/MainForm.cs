@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using System.IO;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using JsonSerializerOptions = System.Text.Json.JsonSerializerOptions;
 
 namespace Fruit_Ninja
 {
@@ -18,8 +19,8 @@ namespace Fruit_Ninja
 
         private int _ticks;
         private int _r;
-        
-        static private readonly string _saveFile = "..\\..\\save.txt";
+
+        private const string SaveFile = "..\\..\\save.txt";
         private readonly List<Point> _slicePoints = new List<Point>();
 
         public static bool IsWindowResize;
@@ -43,8 +44,8 @@ namespace Fruit_Ninja
             SettingsForm.Settings = new Settings(1680, 1050, "EASY");
 
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
-            | BindingFlags.Instance | BindingFlags.NonPublic, null,
-            panelGame, new object[] { true });
+                                                         | BindingFlags.Instance | BindingFlags.NonPublic, null,
+                panelGame, new object[] { true });
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -62,19 +63,19 @@ namespace Fruit_Ninja
             _game.Draw(e);
             lblTime.Text = $@"00:{_game.Time:00}";
         }
-         
+
         private void TopScores_Click(object sender, EventArgs e)
         {
             new HighScoresForm().Show();
         }
-        
+
         private void User_Click(object sender, EventArgs e)
         {
             var userForm = new UserForm();
             userForm.ChildFormClosed += UserForm_ChildFormClosed;
             userForm.Show();
         }
-        
+
         private void Play_Click(object sender, EventArgs e)
         {
             NewGame();
@@ -102,7 +103,7 @@ namespace Fruit_Ninja
             var settings = new SettingsForm();
 
             if (settings.ShowDialog() != DialogResult.OK) return;
-            
+
             if (!IsWindowResize) return;
 
             if (Width == 1680)
@@ -111,10 +112,10 @@ namespace Fruit_Ninja
                 Height = 1080;
                 IsWindowResize = false;
                 CenterFormToScreen();
-            } 
+            }
             else
             {
-                
+
                 Width = 1680;
                 Height = 1050;
                 IsWindowResize = true;
@@ -133,7 +134,7 @@ namespace Fruit_Ninja
             if (dr == DialogResult.Yes)
                 ActiveForm?.Close();
         }
-        
+
         private void PanelGame_Click(object sender, EventArgs e)
         {
             _isSlicing = true;
@@ -152,7 +153,7 @@ namespace Fruit_Ninja
 
             _slicePoints.Add(PointToClient(Cursor.Position));
 
-            Task.Factory.StartNew(() => _game.DrawCurve(_slicePoints,  _r));
+            Task.Factory.StartNew(() => _game.DrawCurve(_slicePoints, _r));
 
             if (!_game.IsGameActive(_slicePoints))
             {
@@ -203,9 +204,15 @@ namespace Fruit_Ninja
 
             switch (SettingsForm.Settings.Difficulty)
             {
-                case "EASY": speed = 40; break;
-                case "MEDIUM": speed = 30; break;
-                case "HARD": speed = 20; break;
+                case "EASY":
+                    speed = 40;
+                    break;
+                case "MEDIUM":
+                    speed = 30;
+                    break;
+                case "HARD":
+                    speed = 20;
+                    break;
             }
 
             if (_ticks++ % speed == 0)
@@ -248,9 +255,15 @@ namespace Fruit_Ninja
         {
             switch (SettingsForm.Settings.Difficulty)
             {
-                case "EASY": gameTimer.Interval = 50; break;
-                case "MEDIUM": gameTimer.Interval = 30; break;
-                case "HARD": gameTimer.Interval = 20; break;
+                case "EASY":
+                    gameTimer.Interval = 50;
+                    break;
+                case "MEDIUM":
+                    gameTimer.Interval = 30;
+                    break;
+                case "HARD":
+                    gameTimer.Interval = 20;
+                    break;
             }
         }
 
@@ -265,7 +278,8 @@ namespace Fruit_Ninja
             CurrentUser.AddScore(currentScore);
 
             const string title = "Time Up :(";
-            var text = $"No more time {CurrentUser.Name}. You have scored {_game.CurrentScore.Points} points! Play again?";
+            var text =
+                $"No more time {CurrentUser.Name}. You have scored {_game.CurrentScore.Points} points! Play again?";
 
             var dr = MessageBox.Show(text, title, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
@@ -278,7 +292,7 @@ namespace Fruit_Ninja
                 tableLayoutPanel1.Visible = true;
                 panelGame.Visible = false;
 
-                if (ActiveForm != null) 
+                if (ActiveForm != null)
                     ActiveForm.BackgroundImage = Properties.Resources._2013_08_28_105146;
             }
         }
@@ -310,44 +324,28 @@ namespace Fruit_Ninja
 
         public void SaveToFile()
         {
-            var bf = new BinaryFormatter();
-            var fs = new FileStream(_saveFile, FileMode.Create, FileAccess.Write);
+            var jsonContent = JsonConvert.SerializeObject(Users.Values, Formatting.Indented);
 
-            bf.Serialize(fs, Users.Values.ToArray());
-            fs.Close();
-
-        } // try catch
+            using (var sw = new StreamWriter(SaveFile))
+            {
+                sw.Write(jsonContent);
+            }
+        }
 
         public void LoadFromFile()
         {
-            var bf = new BinaryFormatter();
-            var fs = new FileStream(_saveFile, FileMode.Open, FileAccess.Read);
-            var userList = (User[])bf.Deserialize(fs);
+            var jsonContent = File.ReadAllText(SaveFile);
 
-            fs.Close();
+            Users = JsonConvert
+                        .DeserializeObject<User[]>(jsonContent)
+                        .ToDictionary(x => x.Name, x => x);
 
-            Users = userList.ToDictionary((x) => x.Name, (x) => x);
-
-            foreach (var s in Users.Values.SelectMany(user => user.Scores))
-                TopScores?.Add(s);
-
-            var u = new User() { Name = "Guest" };
-
-            if (!Users.ContainsKey("Guest"))
+            foreach (var score in Users.Values.SelectMany(user => user.Scores))
             {
-                Users.Add("Guest", u);
-            }
-            else
-            {
-                foreach (var us in Users.Values.Where(us => us.Name.Equals("Guest")))
-                {
-                    u = us;
-                    break;
-                }
+                TopScores?.Add(score);
             }
 
-            CurrentUser = u;
-
-        }  // try catch
+            CurrentUser = Users["Guest"];
+        }
     }
 }

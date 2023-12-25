@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Fruit_Ninja
@@ -7,6 +8,8 @@ namespace Fruit_Ninja
     public class User
     {
         public string Name { get; set; }
+
+        [JsonProperty("Scores")]
 
         public List<Score> Scores = new List<Score>();
         

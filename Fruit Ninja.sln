@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fruit Ninja", "Fruit Ninja\Fruit Ninja.csproj", "{5083B7C2-3D70-4246-B0DF-4260F9986C18}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{252FC9B9-8C3F-4782-83F0-71066D0075FC}"
+	ProjectSection(SolutionItems) = preProject
+		Fruit Ninja\save.txt = Fruit Ninja\save.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Fruit_Ninja
 {
     [Serializable]
+    
     public class Score : IComparable<Score>
     {
         public int Points;

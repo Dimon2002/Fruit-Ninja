@@ -18,7 +18,7 @@ namespace Fruit_Ninja
         public List<Element> Elements = new List<Element>();
 
         public Score CurrentScore = new Score(0, new DateTime(), "");
-        public int Time = 25;
+        public int Time = 5;
         public int BombsClicked = 0;
 
         private const int PenWidth = 5;
