@@ -36,15 +36,15 @@ namespace Fruit_Ninja
             else if (!lblHard.Enabled)
                 difficulty = HardDifficulty;
 
-            if (!lbl800x600.Enabled)
+            if (!lbl1680x1050.Enabled)
             {
-                width = 800;
-                height = 600;
+                width = 1680;
+                height = 1050;
             }
             else
             {
-                width = 1024;
-                height = 768;
+                width = 1920;
+                height = 1080;
             }
 
             var newSettings = new Settings(width, height, difficulty);
@@ -75,10 +75,10 @@ namespace Fruit_Ninja
          
         private void UpdateFields()
         {
-            lbl800x600.Enabled = Settings.Width == 1024;
-            lbl1024x768.Enabled = !lbl800x600.Enabled;
-            lbl800x600.Cursor = lbl800x600.Enabled ? Cursors.Hand : Cursors.Default;
-            lbl1024x768.Cursor = lbl1024x768.Enabled ? Cursors.Hand : Cursors.Default;
+            lbl1680x1050.Enabled = Settings.Width == 1920;
+            lbl1920x1080.Enabled = !lbl1680x1050.Enabled;
+            lbl1680x1050.Cursor = lbl1680x1050.Enabled ? Cursors.Hand : Cursors.Default;
+            lbl1920x1080.Cursor = lbl1920x1080.Enabled ? Cursors.Hand : Cursors.Default;
 
             SetDifficultyLabel(lblEasy, DifficultyLevel.Easy);
             SetDifficultyLabel(lblMedium, DifficultyLevel.Medium);
@@ -127,22 +127,22 @@ namespace Fruit_Ninja
             CheckOk();
         }
 
-        private void Label1024x768_Click(object sender, EventArgs e)
+        private void Label1920x1080_Click(object sender, EventArgs e)
         {
-            SetResolution(1024, 768);
+            SetResolution(1920, 1080);
         }
 
-        private void Label800x600_Click(object sender, EventArgs e)
+        private void Label1680x1050_Click(object sender, EventArgs e)
         {
-            SetResolution(800, 600);
+            SetResolution(1680, 1050);
         }
-
+       
         private void SetResolution(int width, int height)
         {
-            lbl800x600.Enabled = width == 1024 && height == 768;
-            lbl1024x768.Enabled = !lbl800x600.Enabled;
-            lbl800x600.Cursor = lbl800x600.Enabled ? Cursors.Hand : Cursors.Default;
-            lbl1024x768.Cursor = lbl1024x768.Enabled ? Cursors.Hand : Cursors.Default;
+            lbl1680x1050.Enabled = width == 1920 && height == 1080;
+            lbl1920x1080.Enabled = !lbl1680x1050.Enabled;
+            lbl1680x1050.Cursor = lbl1680x1050.Enabled ? Cursors.Hand : Cursors.Default;
+            lbl1920x1080.Cursor = lbl1920x1080.Enabled ? Cursors.Hand : Cursors.Default;
 
             CheckOk();
         }
@@ -167,7 +167,7 @@ namespace Fruit_Ninja
             var resolution = $"{Settings.Width}x{Settings.Height}";
             var difficulty = Settings.Difficulty;
 
-            var selectedResolution = lbl1024x768.Enabled ? lbl800x600.Text : lbl1024x768.Text;
+            var selectedResolution = lbl1920x1080.Enabled ? lbl1680x1050.Text : lbl1920x1080.Text;
             string selectedDifficulty;
 
             if (lblEasy.Enabled)
@@ -180,6 +180,11 @@ namespace Fruit_Ninja
             }
 
             lblOK.Enabled = !selectedResolution.Equals(resolution) || !selectedDifficulty.Equals(difficulty);
+        }
+
+        private void SettingsForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

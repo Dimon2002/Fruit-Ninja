@@ -19,7 +19,7 @@ namespace Fruit_Ninja
         private int _ticks;
         private int _r;
         
-        private readonly string _saveFile = Environment.CurrentDirectory + "\\save.txt";
+        static private readonly string _saveFile = "..\\..\\save.txt";
         private readonly List<Point> _slicePoints = new List<Point>();
 
         public static bool IsWindowResize;
@@ -40,7 +40,7 @@ namespace Fruit_Ninja
         {
             InitializeComponent();
 
-            SettingsForm.Settings = new Settings(800, 600, "EASY");
+            SettingsForm.Settings = new Settings(1680, 1050, "EASY");
 
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
             | BindingFlags.Instance | BindingFlags.NonPublic, null,
@@ -105,17 +105,18 @@ namespace Fruit_Ninja
             
             if (!IsWindowResize) return;
 
-            if (Width == 800)
+            if (Width == 1680)
             {
-                Width = 1024;
-                Height = 768;
+                Width = 1920;
+                Height = 1080;
                 IsWindowResize = false;
                 CenterFormToScreen();
             } 
             else
             {
-                Width = 800;
-                Height = 600;
+                
+                Width = 1680;
+                Height = 1050;
                 IsWindowResize = true;
                 CenterFormToScreen();
             }
@@ -143,7 +144,7 @@ namespace Fruit_Ninja
         {
             if (!_isSlicing) return;
 
-            if (_slicePoints.Count >= 50)
+            if (_slicePoints.Count >= 10)
             {
                 _slicePoints.Clear();
                 return;
@@ -347,6 +348,6 @@ namespace Fruit_Ninja
 
             CurrentUser = u;
 
-        } // try catch
+        }  // try catch
     }
 }

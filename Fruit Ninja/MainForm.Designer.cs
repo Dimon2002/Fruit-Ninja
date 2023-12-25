@@ -88,10 +88,10 @@ namespace Fruit_Ninja
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 561);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1664, 1011);
             this.tableLayoutPanel1.TabIndex = 10;
             // 
-            // Highscores
+            // pbHighscores
             // 
             this.pbHighscores.BackColor = System.Drawing.Color.Transparent;
             this.pbHighscores.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -109,7 +109,7 @@ namespace Fruit_Ninja
             this.pbUser.BackColor = System.Drawing.Color.Transparent;
             this.pbUser.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbUser.Image = global::Fruit_Ninja.Properties.Resources.user;
-            this.pbUser.Location = new System.Drawing.Point(703, 3);
+            this.pbUser.Location = new System.Drawing.Point(1530, 3);
             this.pbUser.Name = "pbUser";
             this.pbUser.Padding = new System.Windows.Forms.Padding(0, 13, 0, 0);
             this.pbUser.Size = new System.Drawing.Size(67, 78);
@@ -123,7 +123,7 @@ namespace Fruit_Ninja
             this.pbExit.BackColor = System.Drawing.Color.Transparent;
             this.pbExit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbExit.Image = global::Fruit_Ninja.Properties.Resources.exit2;
-            this.pbExit.Location = new System.Drawing.Point(704, 481);
+            this.pbExit.Location = new System.Drawing.Point(1531, 931);
             this.pbExit.Name = "pbExit";
             this.pbExit.Size = new System.Drawing.Size(65, 77);
             this.pbExit.TabIndex = 8;
@@ -136,7 +136,7 @@ namespace Fruit_Ninja
             this.pbSettings.BackColor = System.Drawing.Color.Transparent;
             this.pbSettings.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbSettings.Image = global::Fruit_Ninja.Properties.Resources.settings;
-            this.pbSettings.Location = new System.Drawing.Point(451, 339);
+            this.pbSettings.Location = new System.Drawing.Point(1081, 654);
             this.pbSettings.Name = "pbSettings";
             this.pbSettings.Size = new System.Drawing.Size(107, 105);
             this.pbSettings.TabIndex = 6;
@@ -149,7 +149,7 @@ namespace Fruit_Ninja
             this.pbPlay.BackColor = System.Drawing.Color.Transparent;
             this.pbPlay.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbPlay.Image = global::Fruit_Ninja.Properties.Resources.play2;
-            this.pbPlay.Location = new System.Drawing.Point(264, 339);
+            this.pbPlay.Location = new System.Drawing.Point(684, 654);
             this.pbPlay.Name = "pbPlay";
             this.pbPlay.Size = new System.Drawing.Size(107, 106);
             this.pbPlay.TabIndex = 5;
@@ -160,12 +160,12 @@ namespace Fruit_Ninja
             // 
             this.lblUser.AutoSize = true;
             this.lblUser.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 14, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUser.ForeColor = System.Drawing.Color.White;
-            this.lblUser.Location = new System.Drawing.Point(628, 0);
+            this.lblUser.Location = new System.Drawing.Point(1396, 0);
             this.lblUser.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(58, 87);
+            this.lblUser.Size = new System.Drawing.Size(64, 177);
             this.lblUser.TabIndex = 9;
             this.lblUser.Text = "Guest";
             this.lblUser.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -183,14 +183,13 @@ namespace Fruit_Ninja
             this.panelGame.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelGame.Location = new System.Drawing.Point(0, 0);
             this.panelGame.Name = "panelGame";
-            this.panelGame.Size = new System.Drawing.Size(784, 561);
+            this.panelGame.Size = new System.Drawing.Size(1664, 1011);
             this.panelGame.TabIndex = 12;
             this.panelGame.Visible = false;
-            //this.panelGame.Click += new System.EventHandler(this.PanelGame_Click);
             this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelGame_Paint);
-            this.panelGame.MouseMove += new MouseEventHandler(this.PanelGame_MouseMove);
-            this.panelGame.MouseUp += new MouseEventHandler(this.PanelGame_MouseUp);
-            this.panelGame.MouseDown += new MouseEventHandler(this.PanelGame_Click);
+            this.panelGame.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PanelGame_Click);
+            this.panelGame.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PanelGame_MouseMove);
+            this.panelGame.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PanelGame_MouseUp);
             // 
             // lblTime
             // 
@@ -198,7 +197,7 @@ namespace Fruit_Ninja
             this.lblTime.AutoSize = true;
             this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTime.ForeColor = System.Drawing.Color.White;
-            this.lblTime.Location = new System.Drawing.Point(600, 9);
+            this.lblTime.Location = new System.Drawing.Point(1480, 9);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(150, 55);
             this.lblTime.TabIndex = 6;
@@ -210,7 +209,7 @@ namespace Fruit_Ninja
             this.lblScore.AutoSize = true;
             this.lblScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblScore.ForeColor = System.Drawing.Color.White;
-            this.lblScore.Location = new System.Drawing.Point(716, 496);
+            this.lblScore.Location = new System.Drawing.Point(1596, 946);
             this.lblScore.Name = "lblScore";
             this.lblScore.Size = new System.Drawing.Size(52, 55);
             this.lblScore.TabIndex = 4;
@@ -222,7 +221,7 @@ namespace Fruit_Ninja
             this.pbQuit.BackColor = System.Drawing.Color.Transparent;
             this.pbQuit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbQuit.Image = global::Fruit_Ninja.Properties.Resources.back;
-            this.pbQuit.Location = new System.Drawing.Point(12, 496);
+            this.pbQuit.Location = new System.Drawing.Point(12, 946);
             this.pbQuit.Name = "pbQuit";
             this.pbQuit.Size = new System.Drawing.Size(58, 53);
             this.pbQuit.TabIndex = 3;
@@ -235,7 +234,7 @@ namespace Fruit_Ninja
             this.pbUnpause.BackColor = System.Drawing.Color.Transparent;
             this.pbUnpause.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbUnpause.Image = global::Fruit_Ninja.Properties.Resources.unpaused;
-            this.pbUnpause.Location = new System.Drawing.Point(279, 151);
+            this.pbUnpause.Location = new System.Drawing.Point(719, 376);
             this.pbUnpause.Name = "pbUnpause";
             this.pbUnpause.Size = new System.Drawing.Size(233, 238);
             this.pbUnpause.TabIndex = 2;
@@ -270,7 +269,7 @@ namespace Fruit_Ninja
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Fruit_Ninja.Properties.Resources._2013_08_28_105146;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(1664, 1011);
             this.Controls.Add(this.panelGame);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
