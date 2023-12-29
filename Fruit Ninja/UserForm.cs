@@ -9,7 +9,7 @@ namespace Fruit_Ninja
     {
         public event EventHandler ChildFormClosed;
         
-        public Timer Timer = new Timer
+        public System.Windows.Forms.Timer Timer = new System.Windows.Forms.Timer
         {
             Interval = 1000
         };
