@@ -20,10 +20,11 @@ namespace Fruit_Ninja
         private int _ticks;
         private int _r;
 
-        private const string SaveFile = "..\\..\\save.txt";
-        private readonly List<Point> _slicePoints = new List<Point>();
+        private const string SaveFile = "..\\..\\..\\save.txt";
+        private readonly List<Point> _slicePoints = new();
 
         public static bool IsWindowResize;
+        private static bool CanDraw;
 
         public static User CurrentUser = new User()
         {
@@ -60,7 +61,8 @@ namespace Fruit_Ninja
 
         private void PanelGame_Paint(object sender, PaintEventArgs e)
         {
-            _game.Draw(e);
+            _game.Draw(e, _slicePoints, _r);
+
             lblTime.Text = $@"00:{_game.Time:00}";
         }
 
@@ -137,6 +139,8 @@ namespace Fruit_Ninja
 
         private void PanelGame_Click(object sender, EventArgs e)
         {
+            if (pbUnpause.Visible == true)
+                return;
             _isSlicing = true;
             _slicePoints.Clear();
         }
@@ -153,12 +157,7 @@ namespace Fruit_Ninja
 
             _slicePoints.Add(PointToClient(Cursor.Position));
 
-            Task.Factory.StartNew(() => _game.DrawCurve(_slicePoints, _r));
-
-            if (!_game.IsGameActive(_slicePoints))
-            {
-                StopGame();
-            }
+            //Task.Factory.StartNew(() => _game.DrawCurve(_slicePoints, _r));
         }
 
         private void PanelGame_MouseUp(object sender, MouseEventArgs e)
@@ -195,25 +194,23 @@ namespace Fruit_Ninja
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
+            if (!_game.IsGameActive(_slicePoints))
+            {
+                StopGame();
+            }
+
             lblScore.Text = _game.CurrentScore.Points.ToString();
 
             if (lblScore.Right > Width)
                 lblScore.Left = Width - lblScore.Width - 20;
 
-            var speed = 0;
-
-            switch (SettingsForm.Settings.Difficulty)
+            var speed = SettingsForm.Settings.Difficulty switch
             {
-                case "EASY":
-                    speed = 40;
-                    break;
-                case "MEDIUM":
-                    speed = 30;
-                    break;
-                case "HARD":
-                    speed = 20;
-                    break;
-            }
+                "EASY" => 40,
+                "MEDIUM" => 30,
+                "HARD" => 20,
+                _ => 0
+            };
 
             if (_ticks++ % speed == 0)
                 _game.Elements.Add(new Element());
@@ -233,6 +230,7 @@ namespace Fruit_Ninja
 
         public void NewGame()
         {
+            _isSlicing = false;
             pbUnpause.Visible = true;
             panelGame.Visible = true;
 
@@ -253,18 +251,13 @@ namespace Fruit_Ninja
 
         private void SetGameTimeInterval()
         {
-            switch (SettingsForm.Settings.Difficulty)
+            gameTimer.Interval = SettingsForm.Settings.Difficulty switch
             {
-                case "EASY":
-                    gameTimer.Interval = 50;
-                    break;
-                case "MEDIUM":
-                    gameTimer.Interval = 30;
-                    break;
-                case "HARD":
-                    gameTimer.Interval = 20;
-                    break;
-            }
+                "EASY" => 50,
+                "MEDIUM" => 30,
+                "HARD" => 20,
+                _ => gameTimer.Interval
+            };
         }
 
         public void StopGame()

@@ -51,12 +51,14 @@ namespace Fruit_Ninja
             Background = BackgroundResources[randomIndex];
         }
 
-        public void Draw(PaintEventArgs e)
+        public void Draw(PaintEventArgs e, List<Point> points, int seed)
         {
             foreach (var el in Elements)
             {
                 el.Draw(e);
             }
+
+            DrawCurve(e,points, seed);
         }
 
         public void Move()
@@ -80,26 +82,21 @@ namespace Fruit_Ninja
             }
         }
 
-        public void DrawCurve(List<Point> points, int seed)
+        public void DrawCurve(PaintEventArgs e, List<Point> points, int seed)
         {
             var pointsCopy = points.ToArray();
 
             if (pointsCopy.Length < 2) return;
 
             MainForm.panelGame.Invoke(
-            ()=>
+            () =>
             {
-                using (var g = MainForm.panelGame.CreateGraphics())
-                {
-                    using (var brush = new LinearGradientBrush(pointsCopy.First(), pointsCopy.Last(), GetColor(seed),
-                               GetColor(seed / 2)))
-                    {
-                        using (var pen = new Pen(brush, PenWidth))
-                        {
-                            g.DrawCurve(pen, pointsCopy);
-                        }
-                    }
-                }
+
+                using var brush = new LinearGradientBrush(pointsCopy.First(), pointsCopy.Last(), GetColor(seed),
+                           GetColor(seed / 2));
+                using var pen = new Pen(brush, PenWidth);
+
+                e.Graphics.DrawCurve(pen, pointsCopy);
             });
         }
 

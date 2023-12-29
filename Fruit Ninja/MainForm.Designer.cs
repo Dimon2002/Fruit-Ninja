@@ -30,275 +30,284 @@ namespace Fruit_Ninja
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.pbHighscores = new System.Windows.Forms.PictureBox();
-            this.pbUser = new System.Windows.Forms.PictureBox();
-            this.pbExit = new System.Windows.Forms.PictureBox();
-            this.pbSettings = new System.Windows.Forms.PictureBox();
-            this.pbPlay = new System.Windows.Forms.PictureBox();
-            this.lblUser = new System.Windows.Forms.Label();
-            this.panelGame = new System.Windows.Forms.Panel();
-            this.lblTime = new System.Windows.Forms.Label();
-            this.lblScore = new System.Windows.Forms.Label();
-            this.pbQuit = new System.Windows.Forms.PictureBox();
-            this.pbUnpause = new System.Windows.Forms.PictureBox();
-            this.pbPause = new System.Windows.Forms.PictureBox();
-            this.gameTimer = new System.Windows.Forms.Timer(this.components);
-            this.timeTimer = new System.Windows.Forms.Timer(this.components);
-            this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbHighscores)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbUser)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbExit)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSettings)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbPlay)).BeginInit();
-            this.panelGame.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbQuit)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbUnpause)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbPause)).BeginInit();
-            this.SuspendLayout();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            pbHighscores = new PictureBox();
+            pbUser = new PictureBox();
+            pbExit = new PictureBox();
+            lblUser = new Label();
+            pbPlay = new PictureBox();
+            pbSettings = new PictureBox();
+            panelGame = new Panel();
+            lblTime = new Label();
+            lblScore = new Label();
+            pbQuit = new PictureBox();
+            pbUnpause = new PictureBox();
+            pbPause = new PictureBox();
+            gameTimer = new System.Windows.Forms.Timer(components);
+            timeTimer = new System.Windows.Forms.Timer(components);
+            tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbHighscores).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbUser).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbExit).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbPlay).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbSettings).BeginInit();
+            panelGame.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbQuit).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbUnpause).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbPause).BeginInit();
+            SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel1.ColumnCount = 5;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.89543F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.89543F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.89543F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.36598F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.94772F));
-            this.tableLayoutPanel1.Controls.Add(this.pbHighscores, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.pbUser, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.pbExit, 4, 4);
-            this.tableLayoutPanel1.Controls.Add(this.lblUser, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.pbPlay, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.pbSettings, 2, 4);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1664, 1011);
-            this.tableLayoutPanel1.TabIndex = 10;
+            tableLayoutPanel1.BackColor = Color.Transparent;
+            tableLayoutPanel1.ColumnCount = 5;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 23.89543F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 23.89543F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 23.89543F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.36598F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.94772F));
+            tableLayoutPanel1.Controls.Add(pbHighscores, 0, 0);
+            tableLayoutPanel1.Controls.Add(pbUser, 4, 0);
+            tableLayoutPanel1.Controls.Add(pbExit, 4, 4);
+            tableLayoutPanel1.Controls.Add(lblUser, 3, 0);
+            tableLayoutPanel1.Controls.Add(pbPlay, 1, 4);
+            tableLayoutPanel1.Controls.Add(pbSettings, 2, 4);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(4, 3, 4, 3);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 5;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 23F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 23F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 23F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 23F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 23F));
+            tableLayoutPanel1.Size = new Size(1924, 1061);
+            tableLayoutPanel1.TabIndex = 10;
             // 
             // pbHighscores
             // 
-            this.pbHighscores.BackColor = System.Drawing.Color.Transparent;
-            this.pbHighscores.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbHighscores.Image = global::Fruit_Ninja.Properties.Resources.trophy;
-            this.pbHighscores.Location = new System.Drawing.Point(3, 3);
-            this.pbHighscores.Name = "pbHighscores";
-            this.pbHighscores.Size = new System.Drawing.Size(102, 102);
-            this.pbHighscores.TabIndex = 4;
-            this.pbHighscores.TabStop = false;
-            this.pbHighscores.Click += new System.EventHandler(this.TopScores_Click);
+            pbHighscores.BackColor = Color.Transparent;
+            pbHighscores.Cursor = Cursors.Hand;
+            pbHighscores.Image = Properties.Resources.trophy;
+            pbHighscores.Location = new Point(4, 3);
+            pbHighscores.Margin = new Padding(4, 3, 4, 3);
+            pbHighscores.Name = "pbHighscores";
+            pbHighscores.Size = new Size(119, 118);
+            pbHighscores.TabIndex = 4;
+            pbHighscores.TabStop = false;
+            pbHighscores.Click += TopScores_Click;
             // 
             // pbUser
             // 
-            this.pbUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbUser.BackColor = System.Drawing.Color.Transparent;
-            this.pbUser.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbUser.Image = global::Fruit_Ninja.Properties.Resources.user;
-            this.pbUser.Location = new System.Drawing.Point(1530, 3);
-            this.pbUser.Name = "pbUser";
-            this.pbUser.Padding = new System.Windows.Forms.Padding(0, 13, 0, 0);
-            this.pbUser.Size = new System.Drawing.Size(67, 78);
-            this.pbUser.TabIndex = 7;
-            this.pbUser.TabStop = false;
-            this.pbUser.Click += new System.EventHandler(this.User_Click);
+            pbUser.Anchor = AnchorStyles.Top;
+            pbUser.BackColor = Color.Transparent;
+            pbUser.Cursor = Cursors.Hand;
+            pbUser.Image = Properties.Resources.user;
+            pbUser.Location = new Point(1768, 3);
+            pbUser.Margin = new Padding(4, 3, 4, 3);
+            pbUser.Name = "pbUser";
+            pbUser.Padding = new Padding(0, 15, 0, 0);
+            pbUser.Size = new Size(78, 90);
+            pbUser.TabIndex = 7;
+            pbUser.TabStop = false;
+            pbUser.Click += User_Click;
             // 
             // pbExit
             // 
-            this.pbExit.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.pbExit.BackColor = System.Drawing.Color.Transparent;
-            this.pbExit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbExit.Image = global::Fruit_Ninja.Properties.Resources.exit2;
-            this.pbExit.Location = new System.Drawing.Point(1531, 931);
-            this.pbExit.Name = "pbExit";
-            this.pbExit.Size = new System.Drawing.Size(65, 77);
-            this.pbExit.TabIndex = 8;
-            this.pbExit.TabStop = false;
-            this.pbExit.Click += new System.EventHandler(this.Exit_Click);
-            // 
-            // pbSettings
-            // 
-            this.pbSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbSettings.BackColor = System.Drawing.Color.Transparent;
-            this.pbSettings.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSettings.Image = global::Fruit_Ninja.Properties.Resources.settings;
-            this.pbSettings.Location = new System.Drawing.Point(1004, 811);
-            this.pbSettings.Margin = new System.Windows.Forms.Padding(3, 3, 80, 3);
-            this.pbSettings.Name = "pbSettings";
-            this.pbSettings.Size = new System.Drawing.Size(107, 105);
-            this.pbSettings.TabIndex = 6;
-            this.pbSettings.TabStop = false;
-            this.pbSettings.Click += new System.EventHandler(this.Settings_Click);
-            // 
-            // pbPlay
-            // 
-            this.pbPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbPlay.BackColor = System.Drawing.Color.Transparent;
-            this.pbPlay.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbPlay.Image = global::Fruit_Ninja.Properties.Resources.play2;
-            this.pbPlay.Location = new System.Drawing.Point(667, 811);
-            this.pbPlay.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
-            this.pbPlay.Name = "pbPlay";
-            this.pbPlay.Size = new System.Drawing.Size(107, 106);
-            this.pbPlay.TabIndex = 5;
-            this.pbPlay.TabStop = false;
-            this.pbPlay.Click += new System.EventHandler(this.Play_Click);
+            pbExit.Anchor = AnchorStyles.Bottom;
+            pbExit.BackColor = Color.Transparent;
+            pbExit.Cursor = Cursors.Hand;
+            pbExit.Image = Properties.Resources.exit2;
+            pbExit.Location = new Point(1769, 969);
+            pbExit.Margin = new Padding(4, 3, 4, 3);
+            pbExit.Name = "pbExit";
+            pbExit.Size = new Size(76, 89);
+            pbExit.TabIndex = 8;
+            pbExit.TabStop = false;
+            pbExit.Click += Exit_Click;
             // 
             // lblUser
             // 
-            this.lblUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblUser.AutoSize = true;
-            this.lblUser.Enabled = false;
-            this.lblUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUser.ForeColor = System.Drawing.Color.White;
-            this.lblUser.Location = new System.Drawing.Point(1399, 40);
-            this.lblUser.Margin = new System.Windows.Forms.Padding(0, 40, 0, 0);
-            this.lblUser.Name = "lblUser";
-            this.lblUser.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblUser.Size = new System.Drawing.Size(64, 24);
-            this.lblUser.TabIndex = 0;
-            this.lblUser.Text = "Guest";
-            this.lblUser.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblUser.UseMnemonic = false;
+            lblUser.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblUser.AutoSize = true;
+            lblUser.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblUser.ForeColor = Color.White;
+            lblUser.Location = new Point(1627, 46);
+            lblUser.Margin = new Padding(0, 46, 0, 0);
+            lblUser.Name = "lblUser";
+            lblUser.RightToLeft = RightToLeft.No;
+            lblUser.Size = new Size(64, 24);
+            lblUser.TabIndex = 0;
+            lblUser.Text = "Guest";
+            lblUser.TextAlign = ContentAlignment.MiddleCenter;
+            lblUser.UseMnemonic = false;
+            // 
+            // pbPlay
+            // 
+            pbPlay.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pbPlay.BackColor = Color.Transparent;
+            pbPlay.Cursor = Cursors.Hand;
+            pbPlay.Image = Properties.Resources.play2;
+            pbPlay.Location = new Point(770, 851);
+            pbPlay.Margin = new Padding(4, 3, 23, 3);
+            pbPlay.Name = "pbPlay";
+            pbPlay.Size = new Size(125, 122);
+            pbPlay.TabIndex = 5;
+            pbPlay.TabStop = false;
+            pbPlay.Click += Play_Click;
+            // 
+            // pbSettings
+            // 
+            pbSettings.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pbSettings.BackColor = Color.Transparent;
+            pbSettings.Cursor = Cursors.Hand;
+            pbSettings.Image = Properties.Resources.settings;
+            pbSettings.Location = new Point(1159, 851);
+            pbSettings.Margin = new Padding(4, 3, 93, 3);
+            pbSettings.Name = "pbSettings";
+            pbSettings.Size = new Size(125, 121);
+            pbSettings.TabIndex = 6;
+            pbSettings.TabStop = false;
+            pbSettings.Click += Settings_Click;
             // 
             // panelGame
             // 
-            this.panelGame.BackColor = System.Drawing.Color.Transparent;
-            this.panelGame.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelGame.Controls.Add(this.lblTime);
-            this.panelGame.Controls.Add(this.lblScore);
-            this.panelGame.Controls.Add(this.pbQuit);
-            this.panelGame.Controls.Add(this.pbUnpause);
-            this.panelGame.Controls.Add(this.pbPause);
-            this.panelGame.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.panelGame.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelGame.Location = new System.Drawing.Point(0, 0);
-            this.panelGame.Name = "panelGame";
-            this.panelGame.Size = new System.Drawing.Size(1664, 1011);
-            this.panelGame.TabIndex = 12;
-            this.panelGame.Visible = false;
-            this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelGame_Paint);
-            this.panelGame.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PanelGame_Click);
-            this.panelGame.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PanelGame_MouseMove);
-            this.panelGame.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PanelGame_MouseUp);
+            panelGame.BackColor = Color.Transparent;
+            panelGame.BackgroundImageLayout = ImageLayout.Stretch;
+            panelGame.Controls.Add(lblTime);
+            panelGame.Controls.Add(lblScore);
+            panelGame.Controls.Add(pbQuit);
+            panelGame.Controls.Add(pbUnpause);
+            panelGame.Controls.Add(pbPause);
+            panelGame.Cursor = Cursors.Cross;
+            panelGame.Dock = DockStyle.Fill;
+            panelGame.Location = new Point(0, 0);
+            panelGame.Margin = new Padding(4, 3, 4, 3);
+            panelGame.Name = "panelGame";
+            panelGame.Size = new Size(1924, 1061);
+            panelGame.TabIndex = 12;
+            panelGame.Visible = false;
+            panelGame.Paint += PanelGame_Paint;
+            panelGame.MouseDown += PanelGame_Click;
+            panelGame.MouseMove += PanelGame_MouseMove;
+            panelGame.MouseUp += PanelGame_MouseUp;
             // 
             // lblTime
             // 
-            this.lblTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTime.AutoSize = true;
-            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime.ForeColor = System.Drawing.Color.White;
-            this.lblTime.Location = new System.Drawing.Point(1480, 9);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(150, 55);
-            this.lblTime.TabIndex = 6;
-            this.lblTime.Text = "01:00";
+            lblTime.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblTime.AutoSize = true;
+            lblTime.Font = new Font("Microsoft Sans Serif", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTime.ForeColor = Color.White;
+            lblTime.Location = new Point(1710, 10);
+            lblTime.Margin = new Padding(4, 0, 4, 0);
+            lblTime.Name = "lblTime";
+            lblTime.Size = new Size(150, 55);
+            lblTime.TabIndex = 6;
+            lblTime.Text = "01:00";
             // 
             // lblScore
             // 
-            this.lblScore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblScore.AutoSize = true;
-            this.lblScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblScore.ForeColor = System.Drawing.Color.White;
-            this.lblScore.Location = new System.Drawing.Point(1596, 946);
-            this.lblScore.Name = "lblScore";
-            this.lblScore.Size = new System.Drawing.Size(52, 55);
-            this.lblScore.TabIndex = 4;
-            this.lblScore.Text = "0";
+            lblScore.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblScore.AutoSize = true;
+            lblScore.Font = new Font("Microsoft Sans Serif", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblScore.ForeColor = Color.White;
+            lblScore.Location = new Point(1845, 986);
+            lblScore.Margin = new Padding(4, 0, 4, 0);
+            lblScore.Name = "lblScore";
+            lblScore.Size = new Size(52, 55);
+            lblScore.TabIndex = 4;
+            lblScore.Text = "0";
             // 
             // pbQuit
             // 
-            this.pbQuit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pbQuit.BackColor = System.Drawing.Color.Transparent;
-            this.pbQuit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbQuit.Image = global::Fruit_Ninja.Properties.Resources.back;
-            this.pbQuit.Location = new System.Drawing.Point(12, 946);
-            this.pbQuit.Name = "pbQuit";
-            this.pbQuit.Size = new System.Drawing.Size(58, 53);
-            this.pbQuit.TabIndex = 3;
-            this.pbQuit.TabStop = false;
-            this.pbQuit.Click += new System.EventHandler(this.Quit_Click);
+            pbQuit.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            pbQuit.BackColor = Color.Transparent;
+            pbQuit.Cursor = Cursors.Hand;
+            pbQuit.Image = Properties.Resources.back;
+            pbQuit.Location = new Point(14, 986);
+            pbQuit.Margin = new Padding(4, 3, 4, 3);
+            pbQuit.Name = "pbQuit";
+            pbQuit.Size = new Size(68, 61);
+            pbQuit.TabIndex = 3;
+            pbQuit.TabStop = false;
+            pbQuit.Click += Quit_Click;
             // 
             // pbUnpause
             // 
-            this.pbUnpause.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pbUnpause.BackColor = System.Drawing.Color.Transparent;
-            this.pbUnpause.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbUnpause.Image = global::Fruit_Ninja.Properties.Resources.unpaused;
-            this.pbUnpause.Location = new System.Drawing.Point(719, 376);
-            this.pbUnpause.Name = "pbUnpause";
-            this.pbUnpause.Size = new System.Drawing.Size(233, 238);
-            this.pbUnpause.TabIndex = 2;
-            this.pbUnpause.TabStop = false;
-            this.pbUnpause.Click += new System.EventHandler(this.UnPause_Click);
+            pbUnpause.Anchor = AnchorStyles.None;
+            pbUnpause.BackColor = Color.Transparent;
+            pbUnpause.Cursor = Cursors.Hand;
+            pbUnpause.Image = Properties.Resources.unpaused;
+            pbUnpause.Location = new Point(831, 381);
+            pbUnpause.Margin = new Padding(4, 3, 4, 3);
+            pbUnpause.Name = "pbUnpause";
+            pbUnpause.Size = new Size(272, 275);
+            pbUnpause.TabIndex = 2;
+            pbUnpause.TabStop = false;
+            pbUnpause.Click += UnPause_Click;
             // 
             // pbPause
             // 
-            this.pbPause.BackColor = System.Drawing.Color.Transparent;
-            this.pbPause.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbPause.Image = global::Fruit_Ninja.Properties.Resources.pause;
-            this.pbPause.Location = new System.Drawing.Point(0, 3);
-            this.pbPause.Name = "pbPause";
-            this.pbPause.Size = new System.Drawing.Size(35, 33);
-            this.pbPause.TabIndex = 1;
-            this.pbPause.TabStop = false;
-            this.pbPause.Visible = false;
-            this.pbPause.Click += new System.EventHandler(this.Pause_Click);
+            pbPause.BackColor = Color.Transparent;
+            pbPause.Cursor = Cursors.Hand;
+            pbPause.Image = Properties.Resources.pause;
+            pbPause.Location = new Point(0, 3);
+            pbPause.Margin = new Padding(4, 3, 4, 3);
+            pbPause.Name = "pbPause";
+            pbPause.Size = new Size(41, 38);
+            pbPause.TabIndex = 1;
+            pbPause.TabStop = false;
+            pbPause.Visible = false;
+            pbPause.Click += Pause_Click;
             // 
             // gameTimer
             // 
-            this.gameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
+            gameTimer.Tick += GameTimer_Tick;
             // 
             // timeTimer
             // 
-            this.timeTimer.Interval = 1000;
-            this.timeTimer.Tick += new System.EventHandler(this.ViewTimer_Tick);
+            timeTimer.Interval = 1000;
+            timeTimer.Tick += ViewTimer_Tick;
             // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::Fruit_Ninja.Properties.Resources._2013_08_28_105146;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1664, 1011);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.panelGame);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.Name = "Main";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Fruit Ninja";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
-            this.Load += new System.EventHandler(this.Main_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbHighscores)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbUser)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbExit)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSettings)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbPlay)).EndInit();
-            this.panelGame.ResumeLayout(false);
-            this.panelGame.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbQuit)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbUnpause)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbPause)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = Properties.Resources._2013_08_28_105146;
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(1924, 1061);
+            Controls.Add(tableLayoutPanel1);
+            Controls.Add(panelGame);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(4, 3, 4, 3);
+            MaximizeBox = false;
+            Name = "Main";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Fruit Ninja";
+            FormClosing += Main_FormClosing;
+            Load += Main_Load;
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbHighscores).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbUser).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbExit).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbPlay).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbSettings).EndInit();
+            panelGame.ResumeLayout(false);
+            panelGame.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbQuit).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbUnpause).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbPause).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
